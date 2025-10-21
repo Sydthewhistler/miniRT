@@ -8,12 +8,14 @@ void parse_ambient(char **line, t_environment **env)
 	(*env)->ambient->color = parse_color(line[2], env);
 }
 
-void parse_camera(char **line, t_environment **env)
+void parse_camera(char **line, t_environment **env, t_object **obj)
 {
 	(*env)->camera = malloc(sizeof(t_camera));
 	(*env)->camera->position = parse_vector(line[1], env);
 	(*env)->camera->orientation = parse_vector_range(line[2], -1.0, 1.0, env);
-	(*env)->camera->fov = parse_int(line[3], 0, 180, env);
+	(*env)->camera->fov = atoi(line[3]);
+	if((*env)->camera->fov < 0 || (*env)->camera->fov > 180)
+		exit_with_error("Error: FOV out of range\n", env,obj);
 }
 
 void parse_light(char **line, t_environment **env)

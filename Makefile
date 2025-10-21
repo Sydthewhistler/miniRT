@@ -1,6 +1,6 @@
 NAME	= miniRT
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -I./includes -I./libft -I./minilibx-linux
+CFLAGS	= -Wall -Wextra -Werror -I./includes -I./libft -I./minilibx-linux -g3
 LIBRARIES = libft/libft.a minilibx-linux/libmlx.a
 
 SRCS	= srcs/main.c \
@@ -9,7 +9,8 @@ SRCS	= srcs/main.c \
 		  srcs/parsing/parsing_master.c \
 		  srcs/process/process_master.c \
 		  srcs/utils/error.c \
-		  srcs/utils/free.c
+		  srcs/utils/free.c \
+		  srcs/utils/utils.c
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -30,12 +31,14 @@ download :
 	@cd minilibx-linux && make
 
 clean:
-	$(MAKE) -C libft clean
 	rm -f $(OBJS)
 
 fclean: clean
-	$(MAKE) -C libft fclean
 	rm -f $(NAME)
+
+superclean: fclean
+	@cd libft && make fclean
+	@rm -rf minilibx-linux
 
 re: fclean all
 

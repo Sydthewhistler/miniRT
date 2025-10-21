@@ -40,7 +40,7 @@ void environment_parsing(char **line, t_environment **env, t_object **obj)
 	{
 		if((*env)->camera)
 			exit_with_error("Error\n", env, obj);
-		parse_camera(line, env);
+		parse_camera(line, env, obj);
 	}
 	else if(line[0][0] == 'L')
 	{

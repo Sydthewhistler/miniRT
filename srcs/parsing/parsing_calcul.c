@@ -23,9 +23,13 @@ t_color parse_color(char *str, t_environment **env)
 	{
 		exit_with_error("Error\n", env, NULL);
 	}
-	r = parse_int(components[0], 0, 255, env);
-	g = parse_int(components[1], 0, 255, env);
-	b = parse_int(components[2], 0, 255, env);
+	r = atoi(components[0]);
+	g = atoi(components[1]);
+	b = atoi(components[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	{
+		exit_with_error("Error\n", env, NULL);  // free correctement a faire
+	}
 	color.r = r;
 	color.g = g;
 	color.b = b;

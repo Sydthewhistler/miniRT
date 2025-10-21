@@ -84,13 +84,13 @@ typedef struct s_plane
 // Cylindre
 typedef struct s_cylinder
 {
-	t_vec3 center;           // centre du cylindre
-	t_vec3 axis;             // vecteur normalisé de l'axe du cylindre
-	double diameter;         // diamètre du cylindre
-	double height;           // hauteur du cylindre
-	t_color color;           // couleur RGB
-	struct s_cylinder *next;
-		// pointeur vers le prochain cylindre (liste chaînée)
+	t_vec3 center;   // centre du cylindre
+	t_vec3 axis;     // vecteur normalisé de l'axe du cylindre
+	double diameter; // diamètre du cylindre
+	double height;   // hauteur du cylindre
+	t_color color;   // couleur RGB
+	struct s_cylinder	*next;
+	// pointeur vers le prochain cylindre (liste chaînée)
 }						t_cylinder;
 
 //		RENDERING FUNCTIONS        //
@@ -107,7 +107,8 @@ void					objects_parsing(char **line, t_environment **env,
 							t_object **obj);
 
 void					parse_ambient(char **line, t_environment **env);
-void					parse_camera(char **line, t_environment **env);
+void					parse_camera(char **line, t_environment **env,
+							t_object **obj);
 void					parse_light(char **line, t_environment **env);
 void					parse_sphere(char **line, t_environment **env,
 							t_object **obj);
