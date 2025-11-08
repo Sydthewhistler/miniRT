@@ -19,7 +19,7 @@ t_color parse_color(char *str, t_environment **env)
 	int r, g, b;
 
 	components = ft_split(str, ",");
-	if (!components || ft_tablen(components) != 3)
+	if (!components || ft_lentab(components) != 3)
 	{
 		exit_with_error("Error3\n", env, NULL);
 	}
@@ -43,7 +43,7 @@ t_vec3 parse_vector(char *str, t_environment **env)
 	char **components;
 
 	components = ft_split(str, ",");
-	if (!components || ft_tablen(components) != 3)
+	if (!components || ft_lentab(components) != 3)
 	{
 		exit_with_error("Error5\n", env, NULL);
 	}

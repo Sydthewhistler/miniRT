@@ -1,6 +1,6 @@
 #include "libft.h"
 
-int ft_tablen(char **tab)
+int ft_lentab(char **tab)
 {
 	int len = 0;
 
