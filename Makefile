@@ -1,6 +1,6 @@
 NAME	= miniRT
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -I./includes -I./libft -I./minilibx-linux -g3
+CFLAGS	= -Wall -Wextra -Werror -I./includes -I./libft -I./minilibx-linux -g3 #-lm
 LIBRARIES = libft/libft.a minilibx-linux/libmlx.a
 
 SRCS	= srcs/main.c \

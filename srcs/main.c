@@ -3,18 +3,31 @@
 void debug_print_environment(t_environment *env);
 void debug_print_objects(t_object *obj);
 
+void init_structs(t_environment **env, t_object **obj)
+{
+	*env = malloc(sizeof(t_environment));
+	(*env)->ambient = NULL;
+	(*env)->camera = NULL;
+	(*env)->light = NULL;
+
+	*obj = malloc(sizeof(t_object));
+	(*obj)->spheres = NULL;
+	(*obj)->planes = NULL;
+	(*obj)->cylinders = NULL;
+}
+
 int main(int argc, char **argv)
 {
 	t_environment	*env;
 	t_object		*obj;
 
+	
 	if(argc != 2)
 	{
 		printf("Usage: %s <scene_file.rt>\n", argv[0]);
 		return (-1);
 	}
-	env = malloc(sizeof(t_environment));
-	obj = malloc(sizeof(t_object));
+	init_structs(&env, &obj);
 	parsing_master(argv[1], &env, &obj);
 
 	// Debug print after parsing
