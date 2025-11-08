@@ -1,44 +1,47 @@
-NAME	= miniRT
-CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -I./includes -I./libft -I./minilibx-linux -g3
-LIBRARIES = libft/libft.a minilibx-linux/libmlx.a
+NAME = miniRT
 
-SRCS	= srcs/main.c \
-		  srcs/parsing/parsing_by_type.c \
-		  srcs/parsing/parsing_calcul.c \
-		  srcs/parsing/parsing_master.c \
-		  srcs/process/process_master.c \
-		  srcs/utils/error.c \
-		  srcs/utils/free.c \
-		  srcs/utils/utils.c
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g3
+INCLUDES = -I. -I./minilibx-linux
+LDFLAGS = -lm -lX11 -lXext
 
-OBJS	= $(SRCS:.c=.o)
+MLX_PATH = minilibx-linux
+MLX = $(MLX_PATH)/libmlx.a
 
-all: $(NAME)
+SRCS = srcs/main.c \
+       srcs/free.c \
+       srcs/op_vector.c \
+       srcs/op_vec_two.c \
+	   srcs/graphics/init.c \
+	   srcs/graphics/hooks.c \
+	   srcs/graphics/ray.c \
+
+OBJS = $(SRCS:.c=.o)
+
+all: $(MLX) $(NAME)
+
+$(MLX):
+	@if [ ! -d "$(MLX_PATH)" ]; then \
+		echo "📥 Cloning MiniLibX..."; \
+		git clone https://github.com/42Paris/minilibx-linux.git; \
+	fi
+	@echo "🔨 Building MiniLibX..."
+	@make -C $(MLX_PATH) > /dev/null 2>&1
+	@echo "✓ MiniLibX ready"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBRARIES) -o $(NAME)
-
-start : download
-	@cd libft && make && make clean
-
-download :
-	@wget https://cdn.intra.42.fr/document/document/40722/minilibx-linux.tgz
-	@tar -xvf minilibx-linux.tgz && rm -rf minilibx-linux.tgz
-	@cd minilibx-linux && make
+	@echo "🔗 Linking $(NAME)..."
+	@$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LDFLAGS) -o $(NAME)
+	@echo "✅ $(NAME) created!"
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
-
-superclean: fclean
-	@cd libft && make fclean
-	@rm -rf minilibx-linux
+	@rm -f $(NAME)
 
 re: fclean all
 

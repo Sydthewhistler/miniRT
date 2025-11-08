@@ -1,129 +1,87 @@
 #include "miniRT.h"
 
-void debug_print_environment(t_environment *env);
-void debug_print_objects(t_object *obj);
-
-int main(int argc, char **argv)
+int main(void)
 {
-	t_environment	*env;
-	t_object		*obj;
+    t_environment env;
+    t_object obj;
+    t_ambient ambient;
+    t_camera camera;
+    t_light light;
+    t_sphere sphere;
+    t_plane plane;
+    t_cylinder cylinder;
 
-	if(argc != 2)
-	{
-		printf("Usage: %s <scene_file.rt>\n", argv[0]);
-		return (-1);
-	}
-	env = malloc(sizeof(t_environment));
-	obj = malloc(sizeof(t_object));
-	parsing_master(argv[1], &env, &obj);
+    // A 0.2 255,255,255
+    ambient.ratio = 0.2;
+    ambient.color.r = 255;
+    ambient.color.g = 255;
+    ambient.color.b = 255;
 
-	// Debug print after parsing
-	debug_print_environment(env);
-	debug_print_objects(obj);
+    // C -50,0,20 0,0,1 70
+    camera.position.x = -50.0;
+    camera.position.y = 0.0;
+    camera.position.z = 20.0;
+    camera.orientation.x = 0.0;
+    camera.orientation.y = 0.0;
+    camera.orientation.z = 1.0;
+    camera.fov = 70;
 
-	//process_rendering(env, obj);
-	free_environment(env);
-	free_objects(obj);
-	return (0);
-}
+    // L -40,0,30 0.7 255,255,255
+    light.position.x = -40.0;
+    light.position.y = 0.0;
+    light.position.z = 30.0;
+    light.brightness = 0.7;
+    light.color.r = 255;
+    light.color.g = 255;
+    light.color.b = 255;
 
-void debug_print_environment(t_environment *env)
-{
-    printf("\n=== ENVIRONMENT INFO ===\n");
-    printf("Ambient Light:\n");
-    printf("  Ratio: %f\n", env->ambient->ratio);
-    printf("  Color: R:%d G:%d B:%d\n", 
-        env->ambient->color.r,
-        env->ambient->color.g,
-        env->ambient->color.b);
+    // sp 0,0,20 20 255,0,0
+    sphere.center.x = 0.0;
+    sphere.center.y = 0.0;
+    sphere.center.z = 20.0;
+    sphere.diameter = 20.0;
+    sphere.color.r = 255;
+    sphere.color.g = 0;
+    sphere.color.b = 0;
+    sphere.next = NULL;
 
-    printf("\nCamera:\n");
-    printf("  Position: x:%f y:%f z:%f\n",
-        env->camera->position.x,
-        env->camera->position.y,
-        env->camera->position.z);
-    printf("  Orientation: x:%f y:%f z:%f\n",
-        env->camera->orientation.x,
-        env->camera->orientation.y,
-        env->camera->orientation.z);
-    printf("  FOV: %d\n", env->camera->fov);
+    // pl 0,0,0 0,1.0,0 255,0,225
+    plane.point.x = 0.0;
+    plane.point.y = 0.0;
+    plane.point.z = 0.0;
+    plane.normal.x = 0.0;
+    plane.normal.y = 1.0;
+    plane.normal.z = 0.0;
+    plane.color.r = 255;
+    plane.color.g = 0;
+    plane.color.b = 225;
+    plane.next = NULL;
 
-    printf("\nLight:\n");
-    printf("  Position: x:%f y:%f z:%f\n",
-        env->light->position.x,
-        env->light->position.y,
-        env->light->position.z);
-    printf("  Brightness: %f\n", env->light->brightness);
-    printf("  Color: R:%d G:%d B:%d\n",
-        env->light->color.r,
-        env->light->color.g,
-        env->light->color.b);
-}
+    // cy 50.0,0.0,20.6 0,0,1.0 14.2 21.42 10,0,255
+    cylinder.center.x = 50.0;
+    cylinder.center.y = 0.0;
+    cylinder.center.z = 20.6;
+    cylinder.axis.x = 0.0;
+    cylinder.axis.y = 0.0;
+    cylinder.axis.z = 1.0;
+    cylinder.diameter = 14.2;
+    cylinder.height = 21.42;
+    cylinder.color.r = 10;
+    cylinder.color.g = 0;
+    cylinder.color.b = 255;
+    cylinder.next = NULL;
 
-void debug_print_objects(t_object *obj)
-{
-    t_sphere *sphere = obj->spheres;
-    t_plane *plane = obj->planes;
-    t_cylinder *cylinder = obj->cylinders;
-    int i = 1;
+    // Remplir les structures principales
+    env.ambient = &ambient;
+    env.camera = &camera;
+    env.light = &light;
 
-    printf("\n=== OBJECTS INFO ===\n");
-    
-    // Print spheres
-    while (sphere != NULL)
-    {
-        printf("\nSphere %d:\n", i++);
-        printf("  Center: x:%f y:%f z:%f\n",
-            sphere->center.x,
-            sphere->center.y,
-            sphere->center.z);
-        printf("  Diameter: %f\n", sphere->diameter);
-        printf("  Color: R:%d G:%d B:%d\n",
-            sphere->color.r,
-            sphere->color.g,
-            sphere->color.b);
-        sphere = sphere->next;
-    }
+    obj.spheres = &sphere;
+    obj.planes = &plane;
+    obj.cylinders = &cylinder;
 
-    // Print planes
-    while (plane != NULL)
-    {
-        printf("\nPlane %d:\n", i++);
-        printf("  Point: x:%f y:%f z:%f\n",
-            plane->point.x,
-            plane->point.y,
-            plane->point.z);
-        printf("  Normal: x:%f y:%f z:%f\n",
-            plane->normal.x,
-            plane->normal.y,
-            plane->normal.z);
-        printf("  Color: R:%d G:%d B:%d\n",
-            plane->color.r,
-            plane->color.g,
-            plane->color.b);
-        plane = plane->next;
-    }
+    // Appeler votre fonction de rendu
+    init_miniRT(&env, &obj);
 
-    // Print cylinders
-    while (cylinder != NULL)
-    {
-        printf("\nCylinder %d:\n", i++);
-        printf("  Center: x:%f y:%f z:%f\n",
-            cylinder->center.x,
-            cylinder->center.y,
-            cylinder->center.z);
-        printf("  Axis: x:%f y:%f z:%f\n",
-            cylinder->axis.x,
-            cylinder->axis.y,
-            cylinder->axis.z);
-        printf("  Diameter: %f\n", cylinder->diameter);
-        printf("  Height: %f\n", cylinder->height);
-        printf("  Color: R:%d G:%d B:%d\n",
-            cylinder->color.r,
-            cylinder->color.g,
-            cylinder->color.b);
-        cylinder = cylinder->next;
-    }
-    
-    printf("\n=== END OF DEBUG INFO ===\n");
+    return (0);
 }
