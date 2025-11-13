@@ -11,6 +11,8 @@
 
 # define WIDTH 800
 # define HEIGHT 600
+# define QUALITY 10
+# define M_PI 3.14159265358979323846
 
 // ------------------------------------------------------
 // STRUCTURES PRINCIPALES
@@ -41,6 +43,7 @@ typedef struct s_camera
 	t_vec3				position;
 	t_vec3				orientation;
 	int					fov;
+	int					samples_per_pixel;
 }						t_camera;
 
 typedef struct s_light
@@ -122,6 +125,15 @@ typedef struct s_camera_basis
 	double				viewport_height;
 }						t_camera_basis;
 
+typedef struct s_hit_record
+{
+	t_vec3				point;
+	t_vec3				normal;
+	double				t;
+	int					front_face;
+	t_sphere			*hit_sphere;
+}						t_hit_record;
+
 // ------------------------------------------------------
 // FONCTIONS UTILITAIRES / RENDU
 // ------------------------------------------------------
@@ -139,8 +151,23 @@ void					exit_with_error(const char *message,
 void					init_miniRT(t_environment *env, t_object *obj);
 void					apply_hooks(t_minirt *rt);
 int						close_window(t_minirt *rt);
+void					my_mlx_pixel_put(t_minirt *rt, int x, int y, int color);
+void					render_pixels(t_minirt *rt, t_camera_basis *basis);
 
+// setup
 void					setup_camera(t_minirt *rt, t_camera_basis *cam);
+t_ray					create_ray(t_vec3 origin, t_vec3 direction);
+t_ray					generate_ray(t_minirt *rt, t_camera_basis *cam, int x,
+							int y, int sample);
+
+// obj
+int						intersect_sphere(t_ray ray, t_sphere *sphere,
+							double *t);
+int						hit_world(t_ray ray, t_object *obj, t_hit_record *rec);
+
+// colors
+t_vec3					ray_color(t_ray ray, t_object *obj, t_environment *env);
+int						vec3_to_int(t_vec3 v);
 
 // Vecteurs
 t_vec3					vec_add(t_vec3 a, t_vec3 b);
@@ -150,5 +177,6 @@ double					vec_dot(t_vec3 a, t_vec3 b);
 double					vec_length(t_vec3 v);
 t_vec3					vec_normalize(t_vec3 v);
 t_vec3					vec_cross(t_vec3 a, t_vec3 b);
+t_vec3					vec_mult(t_vec3 a, t_vec3 b);
 
 #endif

@@ -2,7 +2,7 @@ NAME = miniRT
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
-INCLUDES = -I. -I./minilibx-linux
+INCLUDES = -Iincludes -I./minilibx-linux
 LDFLAGS = -lm -lX11 -lXext
 
 MLX_PATH = minilibx-linux
@@ -15,6 +15,9 @@ SRCS = srcs/main.c \
 	   srcs/graphics/init.c \
 	   srcs/graphics/hooks.c \
 	   srcs/graphics/ray.c \
+	   srcs/graphics/color.c \
+	   srcs/graphics/hit.c \
+	   srcs/graphics/objects/sphere.c
 
 OBJS = $(SRCS:.c=.o)
 
