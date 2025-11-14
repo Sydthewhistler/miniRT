@@ -34,29 +34,19 @@ t_vec3	color_to_vec3(int r, int g, int b)
 	return (new);
 }
 
-static t_vec3	calculate_lighting(t_hit_record *rec, t_sphere *sphere,
-		t_environment *env)
+t_vec3	get_object_color(t_hit_record *rec)
 {
-	t_vec3	obj_color;
-	t_vec3	ambient;
-	t_vec3	light_dir;
-	t_vec3	diffuse;
-	double	diff;
+	t_color	color;
 
-	obj_color = color_to_vec3(sphere->color.r, sphere->color.g,
-			sphere->color.b);
-	ambient = vec_mult(obj_color, color_to_vec3(env->ambient->color.r,
-				env->ambient->color.g, env->ambient->color.b));
-	ambient = vec_scale(ambient, env->ambient->ratio);
-	light_dir = vec_sub(env->light->position, rec->point);
-	light_dir = vec_normalize(light_dir);
-	diff = vec_dot(rec->normal, light_dir);
-	if (diff < 0.0)
-		diff = 0.0;
-	// parce que si diff est <0 c est que la light est apres l obj
-	diffuse = vec_scale(obj_color, env->light->brightness * diff);
-	// combinaison ambiante + diffuse
-	return (vec_add(ambient, diffuse));
+	if (rec->type == OBJ_SPHERE)
+		color = ((t_sphere *)rec->object)->color;
+	else if (rec->type == OBJ_PLANE)
+		color = ((t_plane *)rec->object)->color;
+	else if (rec->type == OBJ_CYLINDER)
+		color = ((t_cylinder *)rec->object)->color;
+	else
+		return ((t_vec3){0, 0, 0});
+	return (color_to_vec3(color.r, color.g, color.b));
 }
 
 t_vec3	ray_color(t_ray ray, t_object *obj, t_environment *env)
@@ -65,8 +55,6 @@ t_vec3	ray_color(t_ray ray, t_object *obj, t_environment *env)
 
 	rec.t = DBL_MAX;
 	if (hit_world(ray, obj, &rec))
-	{
-		return (calculate_lighting(&rec, rec.hit_sphere, env));
-	}
+		return (calculate_lighting(&rec, env, obj));
 	return ((t_vec3){0, 0, 0});
 }

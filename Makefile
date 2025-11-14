@@ -17,7 +17,10 @@ SRCS = srcs/main.c \
 	   srcs/graphics/ray.c \
 	   srcs/graphics/color.c \
 	   srcs/graphics/hit.c \
-	   srcs/graphics/objects/sphere.c
+	   srcs/graphics/light.c \
+	   srcs/graphics/objects/sphere.c \
+	   srcs/graphics/objects/planes.c \
+	   srcs/graphics/objects/cylinder.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -11,7 +11,8 @@ static int	hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *rec)
 		return (0);
 	rec->t = t;
 	rec->point = vec_add(ray.origin, vec_scale(ray.direction, t));
-	rec->hit_sphere = sphere;
+	rec->type = OBJ_SPHERE;
+	rec->object = sphere;
 	// Étape 1 : Calculer la normale sortante (du centre vers le point)
 	outward_normal = vec_sub(rec->point, sphere->center);
 	outward_normal = vec_normalize(outward_normal);
@@ -33,32 +34,100 @@ static int	hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *rec)
 	return (1);
 }
 
+static int	hit_plane(t_ray ray, t_plane *plane, t_hit_record *rec)
+{
+	double	t;
+	double	denom;
+
+	if (!intersect_plane(ray, plane, &t))
+		return (0);
+	if (t < 0.001 || t >= rec->t)
+		return (0);
+	rec->t = t;
+	rec->point = vec_add(ray.origin, vec_scale(ray.direction, t));
+	rec->type = OBJ_PLANE;
+	rec->object = plane;
+	// Déterminer l'orientation de la normale
+	denom = vec_dot(ray.direction, plane->normal);
+	if (denom < 0)
+	{
+		// Le rayon vient de face
+		rec->front_face = 1;
+		rec->normal = plane->normal;
+	}
+	else
+	{
+		// Le rayon vient de derrière
+		rec->front_face = 0;
+		rec->normal = vec_scale(plane->normal, -1.0);
+	}
+	return (1);
+}
+
+static int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *rec)
+{
+	double	t;
+	t_vec3	outward_normal;
+	t_vec3	center_to_point;
+
+	if (!intersect_cylinder_body(ray, cylinder, &t))
+		return (0);
+	if (t < 0.001 || t >= rec->t)
+		return (0);
+	rec->t = t;
+	rec->point = vec_add(ray.origin, vec_scale(ray.direction, t));
+	rec->type = OBJ_CYLINDER;
+	rec->object = cylinder;
+	// Calculer la normale (perpendiculaire à l'axe)
+	center_to_point = vec_sub(rec->point, cylinder->center);
+	// Projection sur l'axe
+	outward_normal = vec_perp_to_axis(center_to_point, cylinder->axis);
+	outward_normal = vec_normalize(outward_normal);
+	// Déterminer front_face
+	if (vec_dot(ray.direction, outward_normal) > 0)
+	{
+		rec->front_face = 0;
+		rec->normal = vec_scale(outward_normal, -1.0);
+	}
+	else
+	{
+		rec->front_face = 1;
+		rec->normal = outward_normal;
+	}
+	return (1);
+}
+
 int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
 {
-	t_sphere	*sphere;
-	int			hit_anything;
-	double		closest_so_far;
+	t_sphere *sphere;
+	t_plane *plane;
+	t_cylinder *cylinder; // ← Ajouter
+	int hit_anything;
 
-	// t_plane     *plane;      // Décommente quand tu codes les plans
-	// t_cylinder  *cylinder;   // Décommente quand tu codes les cylindres
 	hit_anything = 0;
-	closest_so_far = rec->t;
 	// Tester les sphères
 	sphere = obj->spheres;
 	while (sphere)
 	{
 		if (hit_sphere(ray, sphere, rec))
-		{
 			hit_anything = 1;
-			closest_so_far = rec->t;
-		}
 		sphere = sphere->next;
 	}
-	// Plans - À implémenter plus tard
-	// plane = obj->planes;
-	// while (plane) { ... }
-	// Cylindres - À implémenter plus tard
-	// cylinder = obj->cylinders;
-	// while (cylinder) { ... }
+	// Tester les plans
+	plane = obj->planes;
+	while (plane)
+	{
+		if (hit_plane(ray, plane, rec))
+			hit_anything = 1;
+		plane = plane->next;
+	}
+	// Tester les cylindres ← AJOUTER
+	cylinder = obj->cylinders;
+	while (cylinder)
+	{
+		if (hit_cylinder(ray, cylinder, rec))
+			hit_anything = 1;
+		cylinder = cylinder->next;
+	}
 	return (hit_anything);
 }

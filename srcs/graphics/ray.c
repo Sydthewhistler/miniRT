@@ -33,21 +33,25 @@ void	setup_camera(t_minirt *rt, t_camera_basis *cam)
 double	random_double(int x, int y, int sample)
 {
 	double	value;
+	int		seed;
 
-	value = sin(x * 12.9898 + y * 78.233 + sample * 45.164) * 43758.5453;
+	seed = x * 10000 + y * 10 + sample;
+	value = sin(seed * 12.9898) * 43758.5453;
 	return (value - floor(value));
 }
 
-t_ray	generate_ray(t_minirt *rt, t_camera_basis *cam, int x, int y, int sample)
+t_ray	generate_ray(t_minirt *rt, t_camera_basis *cam, int x, int y)
 {
-	double	u;
-	double	v;
-	t_vec3	viewport_point;
-	t_vec3	direction;
-	double	offset[2];
+	double u;
+	double v;
+	t_vec3 viewport_point;
+	t_vec3 direction;
+	double offset[2];
 
-	offset[0] = random_double(x, y, sample * 2) - 0.5;
-	offset[1] = random_double(x, y, sample * 2 + 1) - 0.5;
+	// Utiliser rt->sample_index (à ajouter dans t_minirt)
+	offset[0] = random_double(x, y, rt->sample_index * 2) - 0.5;
+	offset[1] = random_double(x, y, rt->sample_index * 2 + 1) - 0.5;
+
 	u = (((double)x + 0.5 + offset[0]) / (double)WIDTH - 0.5);
 	v = (0.5 - ((double)y + 0.5 + offset[1]) / (double)HEIGHT);
 	viewport_point = rt->env->camera->position;

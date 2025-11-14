@@ -26,10 +26,22 @@ t_vec3	vec_normalize(t_vec3 v)
 
 t_vec3	vec_cross(t_vec3 a, t_vec3 b)
 {
-	t_vec3 result;
+	t_vec3	result;
 
 	result.x = a.y * b.z - a.z * b.y;
 	result.y = a.z * b.x - a.x * b.z;
 	result.z = a.x * b.y - a.y * b.x;
 	return (result);
+}
+
+t_vec3	vec_perp_to_axis(t_vec3 v, t_vec3 axis)
+{
+	double projection_scalaire;
+	t_vec3 v_parallel;
+	t_vec3 v_perp;
+
+	projection_scalaire = vec_dot(v, axis);
+	v_parallel = vec_scale(axis, projection_scalaire);
+	v_perp = vec_sub(v, v_parallel);
+	return (v_perp);
 }

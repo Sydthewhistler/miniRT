@@ -1,110 +1,110 @@
 #include "miniRT.h"
 
-int	main(void)
+int main(void)
 {
-	t_environment env;
-	t_object obj;
-	t_ambient ambient;
-	t_camera camera;
-	t_light light;
-	static t_sphere sphere1; // ← static
-	static t_sphere sphere2; // ← static
-	static t_sphere sphere3; // ← static
-	t_plane plane;
-	t_cylinder cylinder;
+    t_environment   env;
+    t_object        obj;
+    t_ambient       ambient;
+    t_camera        camera;
+    t_light         light;
+    
+    static t_cylinder cylinder;
+    static t_sphere sphere1;
+    static t_sphere sphere2;
+    static t_sphere sphere3;
+    t_plane         plane;
 
-	// A 0.2 255,255,255
-	ambient.ratio = 0.15; // Moins d'ambient = plus de contraste
-	ambient.color.r = 255;
-	ambient.color.g = 255;
-	ambient.color.b = 255;
+    // ========== AMBIENT LIGHT ==========
+    ambient.ratio = 0.25;
+    ambient.color.r = 255;
+    ambient.color.g = 255;
+    ambient.color.b = 255;
 
-	// CAMÉRA - Vue en plongée légère
-	camera.position.x = -60.0;
-	camera.position.y = 25.0; // En hauteur sur le côté
-	camera.position.z = 35.0; // Surélevée
-	camera.orientation.x = 0.85;
-	camera.orientation.y = -0.35;
-	camera.orientation.z = -0.40;
-	camera.fov = 70;
-	camera.samples_per_pixel = QUALITY;
+    // ========== CAMERA (VUE DE CÔTÉ) ==========
+    camera.position.x = -35.0;
+    camera.position.y = 20.0;
+    camera.position.z = -25.0;
+    camera.orientation.x = 0.6;
+    camera.orientation.y = -0.4;
+    camera.orientation.z = 0.5;
+    camera.fov = 75;
+    camera.samples_per_pixel = QUALITY;
 
-	// LUMIÈRE - Bien placée pour créer des ombres
-	light.position.x = -20.0; // Plus proche des objets
-	light.position.y = 30.0;  // En hauteur
-	light.position.z = 40.0;  // Au-dessus
-	light.brightness = 0.8;   // Plus intense
-	light.color.r = 255;
-	light.color.g = 255;
-	light.color.b = 255;
+    // ========== LIGHT ==========
+    light.position.x = -20.0;
+    light.position.y = 13.0;
+    light.position.z = 5.0;
+    light.brightness = 0.7;
+    light.color.r = 255;
+    light.color.g = 255;
+    light.color.b = 255;
 
-	// SPHÈRE 1 : GROSSE CYAN - Arrière-plan bas
-	sphere1.center.x = 25.0;
-	sphere1.center.y = -10.0; // En bas
-	sphere1.center.z = 18.0;
-	sphere1.diameter = 30.0; // Très grosse
-	sphere1.color.r = 0;
-	sphere1.color.g = 255;
-	sphere1.color.b = 255; // CYAN
-	sphere1.next = &sphere2;
+    // ========== PLANE (SOL) ==========
+    plane.point.x = 0.0;
+    plane.point.y = -10.0;
+    plane.point.z = 0.0;
+    plane.normal.x = 0.0;
+    plane.normal.y = 1.0;
+    plane.normal.z = 0.0;
+    plane.color.r = 70;
+    plane.color.g = 70;
+    plane.color.b = 70;
+    plane.next = NULL;
 
-	// SPHÈRE 2 : MOYENNE MAGENTA - Milieu
-	sphere2.center.x = 10.0;
-	sphere2.center.y = 8.0; // Au milieu en hauteur
-	sphere2.center.z = 25.0;
-	sphere2.diameter = 18.0;
-	sphere2.color.r = 255;
-	sphere2.color.g = 0;
-	sphere2.color.b = 255; // MAGENTA
-	sphere2.next = &sphere3;
+    // ========== CYLINDRE (COLONNE VERTE) ==========
+    cylinder.center.x = 0.0;
+    cylinder.center.y = 2.0;      // Un peu au-dessus du sol
+    cylinder.center.z = 5.0;
+    cylinder.axis.x = 0.0;
+    cylinder.axis.y = 1.0;        // Vertical
+    cylinder.axis.z = 0.0;
+    cylinder.diameter = 6.0;
+    cylinder.height = 20.0;
+    cylinder.color.r = 50;
+    cylinder.color.g = 220;
+    cylinder.color.b = 50;
+    cylinder.next = NULL;
 
-	// SPHÈRE 3 : PETITE JAUNE - Premier plan
-	sphere3.center.x = -5.0; // Très proche
-	sphere3.center.y = 15.0; // En haut
-	sphere3.center.z = 30.0;
-	sphere3.diameter = 12.0;
-	sphere3.color.r = 255;
-	sphere3.color.g = 255;
-	sphere3.color.b = 0; // JAUNE
-	sphere3.next = NULL;
+    // ========== SPHERE 1 (ROUGE - devant à gauche) ==========
+    sphere1.center.x = -12.0;
+    sphere1.center.y = -2.0;
+    sphere1.center.z = 5.0;
+    sphere1.diameter = 8.0;
+    sphere1.color.r = 255;
+    sphere1.color.g = 50;
+    sphere1.color.b = 50;
+    sphere1.next = &sphere2;
 
-	// pl 0,0,0 0,1.0,0 255,0,225
-	plane.point.x = 0.0;
-	plane.point.y = 0.0;
-	plane.point.z = 0.0;
-	plane.normal.x = 0.0;
-	plane.normal.y = 1.0;
-	plane.normal.z = 0.0;
-	plane.color.r = 255;
-	plane.color.g = 0;
-	plane.color.b = 225;
-	plane.next = NULL;
+    // ========== SPHERE 2 (BLEUE - devant à droite) ==========
+    sphere2.center.x = 12.0;
+    sphere2.center.y = -2.0;
+    sphere2.center.z = 12.0;
+    sphere2.diameter = 8.0;
+    sphere2.color.r = 50;
+    sphere2.color.g = 100;
+    sphere2.color.b = 255;
+    sphere2.next = &sphere3;
 
-	// cy 50.0,0.0,20.6 0,0,1.0 14.2 21.42 10,0,255
-	cylinder.center.x = 50.0;
-	cylinder.center.y = 0.0;
-	cylinder.center.z = 20.6;
-	cylinder.axis.x = 0.0;
-	cylinder.axis.y = 0.0;
-	cylinder.axis.z = 1.0;
-	cylinder.diameter = 14.2;
-	cylinder.height = 21.42;
-	cylinder.color.r = 10;
-	cylinder.color.g = 0;
-	cylinder.color.b = 255;
-	cylinder.next = NULL;
+    // ========== SPHERE 3 (JAUNE - au sommet) ==========
+    sphere3.center.x = 0.0;
+    sphere3.center.y = 13.0;      // Juste au-dessus du cylindre
+    sphere3.center.z = 5.0;
+    sphere3.diameter = 7.0;
+    sphere3.color.r = 255;
+    sphere3.color.g = 255;
+    sphere3.color.b = 50;
+    sphere3.next = NULL;
 
-	// Remplir les structures principales
-	env.ambient = &ambient;
-	env.camera = &camera;
-	env.light = &light;
+    // ========== ASSEMBLAGE ==========
+    env.ambient = &ambient;
+    env.camera = &camera;
+    env.light = &light;
 
-	obj.spheres = &sphere1;
-	obj.planes = &plane;
-	obj.cylinders = &cylinder;
+    obj.spheres = &sphere1;
+    obj.planes = &plane;
+    obj.cylinders = &cylinder;
 
-	// Appeler votre fonction de rendu
-	init_miniRT(&env, &obj);
+    init_miniRT(&env, &obj);
 
-	return (0);
+    return (0);
 }

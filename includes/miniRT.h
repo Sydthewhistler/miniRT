@@ -11,7 +11,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define QUALITY 10
+# define QUALITY 20
 # define M_PI 3.14159265358979323846
 
 // ------------------------------------------------------
@@ -97,6 +97,14 @@ typedef struct s_object
 // STRUCTURES AJOUTEES
 // ------------------------------------------------------
 
+typedef enum e_object_type
+{
+	OBJ_NONE,
+	OBJ_SPHERE,
+	OBJ_PLANE,
+	OBJ_CYLINDER
+}						t_object_type;
+
 typedef struct s_minirt
 {
 	void				*mlx;
@@ -106,6 +114,7 @@ typedef struct s_minirt
 	int					bits_per_pixel;
 	int					line_length;
 	int					endian;
+	int					sample_index;
 	t_environment		*env;
 	t_object			*obj;
 }						t_minirt;
@@ -131,8 +140,18 @@ typedef struct s_hit_record
 	t_vec3				normal;
 	double				t;
 	int					front_face;
-	t_sphere			*hit_sphere;
+	t_object_type		type;
+	void				*object;
 }						t_hit_record;
+
+typedef struct s_cylinder_calc
+{
+	t_vec3				oc_perp;
+	t_vec3				dir_perp;
+	double				a;
+	double				b;
+	double				c;
+}						t_cylinder_calc;
 
 // ------------------------------------------------------
 // FONCTIONS UTILITAIRES / RENDU
@@ -158,16 +177,23 @@ void					render_pixels(t_minirt *rt, t_camera_basis *basis);
 void					setup_camera(t_minirt *rt, t_camera_basis *cam);
 t_ray					create_ray(t_vec3 origin, t_vec3 direction);
 t_ray					generate_ray(t_minirt *rt, t_camera_basis *cam, int x,
-							int y, int sample);
+							int y);
 
 // obj
 int						intersect_sphere(t_ray ray, t_sphere *sphere,
+							double *t);
+int						intersect_plane(t_ray ray, t_plane *plane, double *t);
+int						intersect_cylinder_body(t_ray ray, t_cylinder *cyl,
 							double *t);
 int						hit_world(t_ray ray, t_object *obj, t_hit_record *rec);
 
 // colors
 t_vec3					ray_color(t_ray ray, t_object *obj, t_environment *env);
 int						vec3_to_int(t_vec3 v);
+t_vec3					calculate_lighting(t_hit_record *rec,
+							t_environment *env, t_object *obj);
+t_vec3					get_object_color(t_hit_record *rec);
+t_vec3					color_to_vec3(int r, int g, int b);
 
 // Vecteurs
 t_vec3					vec_add(t_vec3 a, t_vec3 b);
@@ -178,5 +204,6 @@ double					vec_length(t_vec3 v);
 t_vec3					vec_normalize(t_vec3 v);
 t_vec3					vec_cross(t_vec3 a, t_vec3 b);
 t_vec3					vec_mult(t_vec3 a, t_vec3 b);
+t_vec3					vec_perp_to_axis(t_vec3 v, t_vec3 axis);
 
 #endif

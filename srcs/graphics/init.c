@@ -21,24 +21,23 @@ void	my_mlx_pixel_put(t_minirt *rt, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-static t_vec3	render_single_pixel(t_minirt *rt, t_camera_basis *basis,
-					int x, int y)
+static t_vec3	render_single_pixel(t_minirt *rt, t_camera_basis *basis, int x,
+		int y)
 {
 	t_ray	ray;
 	t_vec3	pixel_color;
 	t_vec3	accumulated_color;
-	int		sample;
 	double	scale;
 
 	accumulated_color = (t_vec3){0, 0, 0};
 	scale = 1.0 / rt->env->camera->samples_per_pixel;
-	sample = 0;
-	while (sample < rt->env->camera->samples_per_pixel)
+	rt->sample_index = 0;
+	while (rt->sample_index < rt->env->camera->samples_per_pixel)
 	{
-		ray = generate_ray(rt, basis, x, y, sample);
+		ray = generate_ray(rt, basis, x, y);
 		pixel_color = ray_color(ray, rt->obj, rt->env);
 		accumulated_color = vec_add(accumulated_color, pixel_color);
-		sample++;
+		rt->sample_index++;
 	}
 	return (vec_scale(accumulated_color, scale));
 }
@@ -72,6 +71,7 @@ void	init_miniRT(t_environment *env, t_object *obj)
 
 	rt.env = env;
 	rt.obj = obj;
+	rt.sample_index = 0;
 	rt.mlx = mlx_init();
 	rt.win = mlx_new_window(rt.mlx, WIDTH, HEIGHT, "miniRT");
 	rt.img = mlx_new_image(rt.mlx, WIDTH, HEIGHT);
