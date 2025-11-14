@@ -14,16 +14,16 @@ void	parsing_master(char *filename, t_environment **env, t_object **obj)
 		gnl_line = get_next_line(fd);
 		if (!gnl_line)
 			break ;
-		line = ft_split(gnl_line, " ");
+		line = ft_split(gnl_line, " \t\n");
 		free(gnl_line);
 		if (!line[0] || line[0][0] == '\n')
 		{
 			free_tab(line);
 			continue ;
 		}
-		if (line[0][0] == 'A' || line[0][0] == 'C' || line[0][0] == 'L')
+		if (!ft_strcmp(line[0], "A") || !ft_strcmp(line[0], "C") || !ft_strcmp(line[0], "L"))
 			environment_parsing(line, env, obj);
-		else if (!ft_strcmp(line[0], "sp") || !ft_strcmp(line[0], "pl")
+		else if (!ft_strcmp(line[0], "sp") || !ft_strcmp(line[0], "pl") || line[0][0] == 'L'
 			|| !ft_strcmp(line[0], "cy"))
 			objects_parsing(line, env, obj);
 		else
@@ -53,10 +53,10 @@ void	environment_parsing(char **line, t_environment **env, t_object **obj)
 			exit_with_error("Error\nCamera already defined", env, obj);
 		parse_camera(line, env, obj);
 	}
-	else if (line[0][0] == 'L' || ft_lentab(line) != 4)
+	else if (line[0][0] == 'L')
 	{
-		if ((*env)->light)
-			exit_with_error("Error\nLight already defined", env, obj);
+		if(ft_lentab(line) != 4)
+			exit_with_error("Error\nLight invalid argument", env, obj);
 		parse_light(line, env);
 	}
 }

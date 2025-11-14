@@ -6,7 +6,7 @@
 /*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:22:29 by scavalli          #+#    #+#             */
-/*   Updated: 2025/10/28 13:59:38 by scavalli         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:22:29 by scavalli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,23 @@ static size_t	count_words(char const *s, char *charset)
 
 	words = 0;
 	i = 0;
+	if (!s || !charset)
+		return (0);
 	while (s[i])
 	{
-		if (!is_charset(s[i], charset) && (is_charset(s[i+ 1], charset) || s[i + 1] == '\0'))
+		while (s[i] && is_charset(s[i], charset))
+			i++; // saute les séparateurs
+
+		if (s[i] && !is_charset(s[i], charset))
+		{
 			words++;
-		i++;
+			while (s[i] && !is_charset(s[i], charset))
+				i++;
+		}
 	}
 	return (words);
 }
+
 
 static void	fill_tab(char *new, char const *s, char *charset)
 {

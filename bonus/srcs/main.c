@@ -30,11 +30,14 @@ int main(int argc, char **argv)
 	init_structs(&env, &obj);
 	parsing_master(argv[1], &env, &obj);
 
-	// Debug print after parsing
 	debug_print_environment(env);
 	debug_print_objects(obj);
 
 	//process_rendering(env, obj);
+
+
+
+
 	free_environment(env);
 	free_objects(obj);
 	return (0);
@@ -42,6 +45,7 @@ int main(int argc, char **argv)
 
 void debug_print_environment(t_environment *env)
 {
+	t_light *light = env->light;
     printf("\n=== ENVIRONMENT INFO ===\n");
     printf("Ambient Light:\n");
     printf("  Ratio: %f\n", env->ambient->ratio);
@@ -61,16 +65,20 @@ void debug_print_environment(t_environment *env)
         env->camera->orientation.z);
     printf("  FOV: %d\n", env->camera->fov);
 
-    printf("\nLight:\n");
-    printf("  Position: x:%f y:%f z:%f\n",
-        env->light->position.x,
-        env->light->position.y,
-        env->light->position.z);
-    printf("  Brightness: %f\n", env->light->brightness);
-    printf("  Color: R:%d G:%d B:%d\n",
-        env->light->color.r,
-        env->light->color.g,
-        env->light->color.b);
+    while(light != NULL)
+	{
+		printf("\nLight:\n");
+		printf("  Position: x:%f y:%f z:%f\n",
+			light->position.x,
+			light->position.y,
+			light->position.z);
+		printf("  Brightness: %f\n", light->brightness);
+		printf("  Color: R:%d G:%d B:%d\n",
+			light->color.r,
+			light->color.g,
+			light->color.b);
+		light = light->next;
+	}
 }
 
 void debug_print_objects(t_object *obj)
