@@ -1,53 +1,55 @@
 NAME = miniRT
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
-INCLUDES = -Iincludes -I./minilibx-linux
-LDFLAGS = -lm -lX11 -lXext
-
-MLX_PATH = minilibx-linux
-MLX = $(MLX_PATH)/libmlx.a
-
-SRCS = srcs/main.c \
-       srcs/free.c \
-       srcs/op_vector.c \
-       srcs/op_vec_two.c \
-	   srcs/graphics/init.c \
-	   srcs/graphics/hooks.c \
-	   srcs/graphics/ray.c \
-	   srcs/graphics/color.c \
-	   srcs/graphics/hit.c \
-	   srcs/graphics/light.c \
-	   srcs/graphics/objects/sphere.c \
-	   srcs/graphics/objects/planes.c \
-	   srcs/graphics/objects/cylinder.c
+SRCS = mandatory/srcs/parsing/parsing_master.c \
+       mandatory/srcs/parsing/parsing_by_type.c \
+       mandatory/srcs/parsing/parsing_calcul.c \
+       mandatory/srcs/graphics/init.c \
+       mandatory/srcs/graphics/hooks.c \
+       mandatory/srcs/graphics/ray.c \
+       mandatory/srcs/graphics/color.c \
+       mandatory/srcs/graphics/hit.c \
+       mandatory/srcs/graphics/light.c \
+       mandatory/srcs/graphics/objects/sphere.c \
+       mandatory/srcs/graphics/objects/planes.c \
+       mandatory/srcs/graphics/objects/cylinder.c \
+       mandatory/srcs/utils/free.c \
+       mandatory/srcs/utils/error.c \
+       mandatory/srcs/utils/utils.c \
+       mandatory/srcs/utils/op_vector.c \
+       mandatory/srcs/utils/op_vec_two.c \
+       mandatory/srcs/main.c
 
 OBJS = $(SRCS:.c=.o)
 
-all: $(MLX) $(NAME)
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+INCLUDES = -Imandatory/includes -I./libft -I./minilibx-linux
+LDFLAGS = -lm -lX11 -lXext
+
+LIBFT = libft/libft.a
+MLX = minilibx-linux/libmlx.a
+
+all: $(LIBFT) $(MLX) $(NAME)
+
+$(LIBFT):
+	make -C libft
 
 $(MLX):
-	@if [ ! -d "$(MLX_PATH)" ]; then \
-		echo "📥 Cloning MiniLibX..."; \
-		git clone https://github.com/42Paris/minilibx-linux.git; \
-	fi
-	@echo "🔨 Building MiniLibX..."
-	@make -C $(MLX_PATH) > /dev/null 2>&1
-	@echo "✓ MiniLibX ready"
-
-%.o: %.c
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	make -C minilibx-linux
 
 $(NAME): $(OBJS)
-	@echo "🔗 Linking $(NAME)..."
-	@$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LDFLAGS) -o $(NAME)
-	@echo "✅ $(NAME) created!"
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(LDFLAGS) -o $(NAME)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS)
+	rm -f $(OBJS)
+	make -C libft clean
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
+	make -C libft fclean
 
 re: fclean all
 

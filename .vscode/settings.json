@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"minirt.h": "c",
-		"random": "c"
+		"random": "c",
+		"fcntl.h": "c"
 	}
 }
