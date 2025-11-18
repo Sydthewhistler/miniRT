@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 10:10:17 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/18 11:05:20 by cprot            ###   ########.fr       */
+/*   Created: 2025/11/18 13:18:17 by cprot             #+#    #+#             */
+/*   Updated: 2025/11/18 13:31:07 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ static int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *rec)
 	t_vec3	outward_normal;
 	t_vec3	center_to_point;
 
-	if (!intersect_cylinder_body(ray, cylinder, &t) || (t < 0.001
-			|| t >= rec->t))
+	if (!intersect_cylinder_body(ray, cylinder, &t))
+		return (0);
+	if (t < 0.001 || t >= rec->t)
 		return (0);
 	rec->t = t;
 	rec->point = vec_add(ray.origin, vec_scale(ray.direction, t));
@@ -110,10 +111,10 @@ static int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *rec)
 
 int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
 {
-	t_sphere	*sphere;
-	t_plane		*plane;
-	t_cylinder	*cylinder;
-	int			hit_anything;
+	t_sphere *sphere;
+	t_plane *plane;
+	t_cylinder *cylinder;
+	int hit_anything;
 
 	hit_anything = 0;
 	// Tester les sphères
@@ -124,7 +125,6 @@ int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
 			hit_anything = 1;
 		sphere = sphere->next;
 	}
-	// Tester les plans
 	plane = obj->planes;
 	while (plane)
 	{
@@ -132,7 +132,6 @@ int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
 			hit_anything = 1;
 		plane = plane->next;
 	}
-	// Tester les cylindres ← AJOUTER
 	cylinder = obj->cylinders;
 	while (cylinder)
 	{

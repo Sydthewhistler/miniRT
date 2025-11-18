@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:10:54 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/18 11:01:19 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/18 14:15:48 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ static int	is_in_shadow(t_vec3 point, t_environment *env, t_object *obj)
 	to_light = vec_sub(env->light->position, point);
 	distance_to_light = vec_length(to_light);
 	ray_to_light.direction = vec_normalize(to_light);
-	ray_to_light.origin = vec_add(point, vec_scale(ray_to_light.direction,
-				0.001));
+	// ray_to_light.origin = vec_add(point, vec_scale(ray_to_light.direction,
+	// 			0.001));
+	ray_to_light.origin = vec_add(point, ray_to_light.direction);
 	shadow_rec.t = distance_to_light;
 	if (hit_world(ray_to_light, obj, &shadow_rec))
 	{
@@ -46,7 +47,10 @@ t_vec3	calculate_lighting(t_hit_record *rec, t_environment *env, t_object *obj)
 				env->ambient->color.g, env->ambient->color.b));
 	ambient = vec_scale(ambient, env->ambient->ratio);
 	if (is_in_shadow(rec->point, env, obj))
+	{
+		// printf("on est dans lombre");
 		return (ambient);
+	}
 	light_dir = vec_sub(env->light->position, rec->point);
 	light_dir = vec_normalize(light_dir);
 	diff = vec_dot(rec->normal, light_dir);
