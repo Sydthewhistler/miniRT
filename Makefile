@@ -44,6 +44,12 @@ $(NAME): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+start : 
+	@wget https://cdn.intra.42.fr/document/document/40722/minilibx-linux.tgz 
+	@tar -xvf minilibx-linux.tgz && rm -rf minilibx-linux.tgz 
+	@cd minilibx-linux && make
+	@cd libft && make
+
 clean:
 	rm -f $(OBJS)
 	make -C libft clean
@@ -51,6 +57,10 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	make -C libft fclean
+
+superclean: fclean 
+	@cd libft && make fclean 
+	@rm -rf minilibx-linux
 
 re: fclean all
 

@@ -6,13 +6,13 @@
 /*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:23 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 11:00:06 by scavalli         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:27:02 by scavalli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	find_type(char *line, t_environment **env, t_object **obj)
+void	find_type(char **line, t_environment **env, t_object **obj)
 {
 	if (ft_strcmp(line[0], "A") == 0 || ft_strcmp(line[0], "C") == 0
 		|| ft_strcmp(line[0], "L") == 0)
