@@ -6,11 +6,11 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:10:54 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 16:50:30 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/19 16:50:14 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 
 static int	is_in_shadow(t_vec3 point, t_environment *env, t_object *obj)
 {

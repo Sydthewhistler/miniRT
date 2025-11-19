@@ -6,12 +6,12 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:30:08 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 15:30:09 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/19 16:38:53 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # include <fcntl.h>
 # include <stdbool.h>

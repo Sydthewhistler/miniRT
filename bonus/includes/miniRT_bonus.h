@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   miniRT_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 11:11:13 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 16:38:38 by cprot            ###   ########.fr       */
+/*   Created: 2025/11/19 16:33:08 by cprot             #+#    #+#             */
+/*   Updated: 2025/11/19 16:38:24 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef MINIRT_BONUS_H
+# define MINIRT_BONUS_H
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
@@ -64,6 +64,7 @@ typedef struct s_light
 	t_vec3				position;
 	double				brightness;
 	t_color				color;
+	struct s_light		*next;
 }						t_light;
 
 typedef struct s_sphere

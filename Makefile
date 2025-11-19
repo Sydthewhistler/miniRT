@@ -24,6 +24,30 @@ SRCS = mandatory/srcs/parsing/parsing_master.c \
        mandatory/srcs/utils/op_vec_two.c \
        mandatory/srcs/main.c
 
+SRCS_BONUS = bonus/srcs/parsing/parsing_master.c \
+       bonus/srcs/parsing/parsing_ambient.c \
+       bonus/srcs/parsing/parsing_objects.c \
+       bonus/srcs/parsing/parsing_calcul.c \
+       bonus/srcs/graphics/init.c \
+       bonus/srcs/graphics/hooks.c \
+       bonus/srcs/graphics/ray.c \
+       bonus/srcs/graphics/color.c \
+       bonus/srcs/graphics/hit.c \
+       bonus/srcs/graphics/hit_sphere.c \
+       bonus/srcs/graphics/hit_plane.c \
+       bonus/srcs/graphics/hit_cylinder.c \
+       bonus/srcs/graphics/light.c \
+       bonus/srcs/graphics/objects/sphere.c \
+       bonus/srcs/graphics/objects/planes.c \
+       bonus/srcs/graphics/objects/cylinder.c \
+       bonus/srcs/graphics/objects/cylinder2.c \
+       bonus/srcs/utils/free.c \
+       bonus/srcs/utils/error.c \
+       bonus/srcs/utils/utils.c \
+       bonus/srcs/utils/op_vector.c \
+       bonus/srcs/utils/op_vec_two.c \
+       bonus/srcs/main.c
+
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
@@ -70,6 +94,11 @@ start:
 	tar -xvf minilibx-linux.tgz && rm -rf minilibx-linux.tgz
 	cd minilibx-linux && make
 	cd libft && make
+
+bonus: $(OBJS_BONUS)
+	echo "$(CYAN)🔗 Linking miniRT bonus...$(RESET)"
+	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(MLX) $(LDFLAGS) -o $(NAME)
+	echo "$(GREEN)✓ miniRT bonus ready! ✨$(RESET)"
 
 clean:
 	echo "$(CYAN)🧹 Cleaning object files...$(RESET)"
