@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:23 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 16:46:39 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/19 17:00:16 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ void	environment_parsing(char **line, t_environment **env, t_object **obj)
 	}
 	else if (line[0][0] == 'C')
 	{
-		if (ft_lentab(line) != 4)
+		if ((*env)->camera || ft_lentab(line) != 4)
 			exit_with_error("Error : Camera already defined or has invalid arguments",
 				env, obj);
 		parse_camera(line, env, obj);
 	}
 	else if (line[0][0] == 'L')
 	{
-		if ((*env)->light || ft_lentab(line) != 4)
+		if (ft_lentab(line) != 4)
 			exit_with_error("Error : Light already defined or has invalid arguments",
 				env, obj);
 		parse_light(line, env);

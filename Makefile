@@ -49,16 +49,19 @@ SRCS_BONUS = bonus/srcs/parsing/parsing_master.c \
        bonus/srcs/main.c
 
 OBJS = $(SRCS:.c=.o)
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+
 INCLUDES = -Imandatory/includes -I./libft -I./minilibx-linux
+INCLUDES_BONUS = -Ibonus/includes -I./libft -I./minilibx-linux
+
 LDFLAGS = -lm -lX11 -lXext
 
 LIBFT = libft/libft.a
 MLX = minilibx-linux/libmlx.a
 
-# Couleurs
 GREEN = \033[0;32m
 BLUE = \033[0;34m
 CYAN = \033[0;36m
@@ -68,22 +71,15 @@ BOLD = \033[1m
 .SILENT:
 
 all: $(LIBFT) $(MLX) $(NAME)
-	echo "\n$(BOLD)$(GREEN)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)"
-	echo "$(BOLD)$(GREEN)  ✓ miniRT ready! 🚀$(RESET)"
-	echo "$(BOLD)$(GREEN)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)\n"
+	echo "$(GREEN)✓ miniRT ready! 🚀$(RESET)"
 
 $(LIBFT):
-	echo "$(BLUE)⚙  Building libft...$(RESET)"
 	make -C libft --no-print-directory
-	echo "$(GREEN)✓  libft ready$(RESET)"
 
 $(MLX):
-	echo "$(BLUE)⚙  Building minilibx...$(RESET)"
 	make -C minilibx-linux --no-print-directory
-	echo "$(GREEN)✓  minilibx ready$(RESET)"
 
 $(NAME): $(OBJS)
-	echo "\n$(CYAN)🔗 Linking miniRT...$(RESET)"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(LDFLAGS) -o $(NAME)
 
 %.o: %.c
@@ -95,27 +91,20 @@ start:
 	cd minilibx-linux && make
 	cd libft && make
 
-bonus: $(OBJS_BONUS)
-	echo "$(CYAN)🔗 Linking miniRT bonus...$(RESET)"
+bonus: INCLUDES=$(INCLUDES_BONUS)
+bonus: $(LIBFT) $(MLX) $(OBJS_BONUS)
+	echo "$(CYAN)🔗 Linking bonus...$(RESET)"
 	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(MLX) $(LDFLAGS) -o $(NAME)
 	echo "$(GREEN)✓ miniRT bonus ready! ✨$(RESET)"
 
 clean:
-	echo "$(CYAN)🧹 Cleaning object files...$(RESET)"
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(OBJS_BONUS)
 	make -C libft clean --no-print-directory
-	echo "$(GREEN)✓  Clean done$(RESET)"
 
 fclean: clean
-	echo "$(CYAN)🗑  Removing binaries...$(RESET)"
 	rm -f $(NAME)
 	make -C libft fclean --no-print-directory
-	echo "$(GREEN)✓  Full clean done$(RESET)"
-
-superclean: fclean
-	cd libft && make fclean --no-print-directory
-	rm -rf minilibx-linux
 
 re: fclean all
 
-.PHONY: all clean fclean superclean re start
+.PHONY: all clean fclean re bonus
