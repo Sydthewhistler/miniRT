@@ -6,7 +6,7 @@
 /*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:23 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 11:27:02 by scavalli         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:56:47 by scavalli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	find_type(char **line, t_environment **env, t_object **obj)
 		objects_parsing(line, env, obj);
 	else
 	{
-		exit_with_error("Error\nInvalid identifier", env, obj);
+		exit_with_error("Error : Invalid identifier", env, obj);
 	}
 	free_tab(line);
 }
@@ -53,7 +53,7 @@ void	parsing_master(char *filename, t_environment **env, t_object **obj)
 	if (close(fd) < 0)
 		exit_with_error("Error closing file", env, obj);
 	if (!(*env)->ambient || !(*env)->camera || !(*env)->light)
-		exit_with_error("Error\nMissing essential elements", env, obj);
+		exit_with_error("Error : Missing essential elements", env, obj);
 }
 
 void	environment_parsing(char **line, t_environment **env, t_object **obj)
@@ -61,21 +61,21 @@ void	environment_parsing(char **line, t_environment **env, t_object **obj)
 	if (line[0][0] == 'A')
 	{
 		if ((*env)->ambient || ft_lentab(line) != 3)
-			exit_with_error("Error\nAmbient lighting already defined or has invalid arguments",
+			exit_with_error("Error : Ambient lighting already defined or has invalid arguments",
 				env, obj);
 		parse_ambient(line, env);
 	}
 	else if (line[0][0] == 'C')
 	{
 		if ((*env)->camera || ft_lentab(line) != 4)
-			exit_with_error("Error\nCamera already defined or has invalid arguments",
+			exit_with_error("Error : Camera already defined or has invalid arguments",
 				env, obj);
 		parse_camera(line, env, obj);
 	}
 	else if (line[0][0] == 'L')
 	{
 		if ((*env)->light || ft_lentab(line) != 4)
-			exit_with_error("Error\nLight already defined or has invalid arguments",
+			exit_with_error("Error : Light already defined or has invalid arguments",
 				env, obj);
 		parse_light(line, env);
 	}
@@ -86,19 +86,19 @@ void	objects_parsing(char **line, t_environment **env, t_object **obj)
 	if (!ft_strcmp(line[0], "sp"))
 	{
 		if (ft_lentab(line) != 4)
-			exit_with_error("Error\nInvalid sphere definition", env, obj);
+			exit_with_error("Error : Invalid sphere definition", env, obj);
 		parse_sphere(line, env, obj);
 	}
 	else if (!ft_strcmp(line[0], "pl"))
 	{
 		if (ft_lentab(line) != 4)
-			exit_with_error("Error\nInvalid plane definition", env, obj);
+			exit_with_error("Error : Invalid plane definition", env, obj);
 		parse_plane(line, env, obj);
 	}
 	else if (!ft_strcmp(line[0], "cy"))
 	{
 		if (ft_lentab(line) != 6)
-			exit_with_error("Error\nInvalid cylinder definition", env, obj);
+			exit_with_error("Error : Invalid cylinder definition", env, obj);
 		parse_cylinder(line, env, obj);
 	}
 }
