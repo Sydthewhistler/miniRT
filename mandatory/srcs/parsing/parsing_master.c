@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_master.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:23 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/18 11:24:18 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/19 11:00:06 by scavalli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	find_type(char *line, t_environment **env, t_object **obj)
+{
+	if (ft_strcmp(line[0], "A") == 0 || ft_strcmp(line[0], "C") == 0
+		|| ft_strcmp(line[0], "L") == 0)
+		environment_parsing(line, env, obj);
+	else if (!ft_strcmp(line[0], "sp") || !ft_strcmp(line[0], "pl")
+		|| !ft_strcmp(line[0], "cy"))
+		objects_parsing(line, env, obj);
+	else
+	{
+		exit_with_error("Error\nInvalid identifier", env, obj);
+	}
+	free_tab(line);
+}
 
 void	parsing_master(char *filename, t_environment **env, t_object **obj)
 {
@@ -33,17 +48,7 @@ void	parsing_master(char *filename, t_environment **env, t_object **obj)
 			free_tab(line);
 			continue ;
 		}
-		if (ft_strcmp(line[0], "A") == 0 || ft_strcmp(line[0], "C") == 0
-			|| ft_strcmp(line[0], "L") == 0)
-			environment_parsing(line, env, obj);
-		else if (!ft_strcmp(line[0], "sp") || !ft_strcmp(line[0], "pl")
-			|| !ft_strcmp(line[0], "cy"))
-			objects_parsing(line, env, obj);
-		else
-		{
-			exit_with_error("Error\nInvalid identifier", env, obj);
-		}
-		free_tab(line);
+		find_type(line, env, obj);
 	}
 	if (close(fd) < 0)
 		exit_with_error("Error closing file", env, obj);

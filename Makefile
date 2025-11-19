@@ -1,7 +1,8 @@
 NAME = miniRT
 
 SRCS = mandatory/srcs/parsing/parsing_master.c \
-       mandatory/srcs/parsing/parsing_by_type.c \
+       mandatory/srcs/parsing/parsing_ambient.c \
+       mandatory/srcs/parsing/parsing_objects.c \
        mandatory/srcs/parsing/parsing_calcul.c \
        mandatory/srcs/graphics/init.c \
        mandatory/srcs/graphics/hooks.c \
