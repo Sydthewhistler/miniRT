@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:22:29 by scavalli          #+#    #+#             */
-/*   Updated: 2025/11/18 10:56:28 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/19 15:29:18 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static size_t	count_words(char const *s, char *charset)
 	while (s[i])
 	{
 		while (s[i] && is_charset(s[i], charset))
-			i++; // saute les séparateurs
+			i++;
 		if (s[i] && !is_charset(s[i], charset))
 		{
 			words++;

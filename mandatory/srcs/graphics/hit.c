@@ -5,119 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 13:18:17 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/18 13:31:07 by cprot            ###   ########.fr       */
+/*   Created: 2025/11/19 13:14:52 by cprot             #+#    #+#             */
+/*   Updated: 2025/11/19 15:40:58 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static int	hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *rec)
+static int	test_spheres(t_ray ray, t_object *obj, t_hit_record *rec)
 {
-	double	t;
-	t_vec3	outward_normal;
-
-	if (!intersect_sphere(ray, sphere, &t))
-		return (0);
-	if (t < 0.001 || t >= rec->t)
-		return (0);
-	rec->t = t;
-	rec->point = vec_add(ray.origin, vec_scale(ray.direction, t));
-	rec->type = OBJ_SPHERE;
-	rec->object = sphere;
-	// Étape 1 : Calculer la normale sortante (du centre vers le point)
-	outward_normal = vec_sub(rec->point, sphere->center);
-	outward_normal = vec_normalize(outward_normal);
-	// Étape 2 : Tester si le rayon vient de l'intérieur ou l'extérieur
-	if (vec_dot(ray.direction, outward_normal) > 0)
-	{
-		// Rayon et normale dans la MÊME direction
-		// → Le rayon vient de l'INTÉRIEUR
-		rec->front_face = 0;
-		rec->normal = vec_scale(outward_normal, -1.0); // Inverser
-	}
-	else
-	{
-		// Rayon et normale dans des directions OPPOSÉES
-		// → Le rayon vient de l'EXTÉRIEUR
-		rec->front_face = 1;
-		rec->normal = outward_normal;
-	}
-	return (1);
-}
-
-static int	hit_plane(t_ray ray, t_plane *plane, t_hit_record *rec)
-{
-	double	t;
-	double	denom;
-
-	if (!intersect_plane(ray, plane, &t))
-		return (0);
-	if (t < 0.001 || t >= rec->t)
-		return (0);
-	rec->t = t;
-	rec->point = vec_add(ray.origin, vec_scale(ray.direction, t));
-	rec->type = OBJ_PLANE;
-	rec->object = plane;
-	// Déterminer l'orientation de la normale
-	denom = vec_dot(ray.direction, plane->normal);
-	if (denom < 0)
-	{
-		// Le rayon vient de face
-		rec->front_face = 1;
-		rec->normal = plane->normal;
-	}
-	else
-	{
-		// Le rayon vient de derrière
-		rec->front_face = 0;
-		rec->normal = vec_scale(plane->normal, -1.0);
-	}
-	return (1);
-}
-
-static int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *rec)
-{
-	double	t;
-	t_vec3	outward_normal;
-	t_vec3	center_to_point;
-
-	if (!intersect_cylinder_body(ray, cylinder, &t))
-		return (0);
-	if (t < 0.001 || t >= rec->t)
-		return (0);
-	rec->t = t;
-	rec->point = vec_add(ray.origin, vec_scale(ray.direction, t));
-	rec->type = OBJ_CYLINDER;
-	rec->object = cylinder;
-	// Calculer la normale (perpendiculaire à l'axe)
-	center_to_point = vec_sub(rec->point, cylinder->center);
-	// Projection sur l'axe
-	outward_normal = vec_perp_to_axis(center_to_point, cylinder->axis);
-	outward_normal = vec_normalize(outward_normal);
-	// Déterminer front_face
-	if (vec_dot(ray.direction, outward_normal) > 0)
-	{
-		rec->front_face = 0;
-		rec->normal = vec_scale(outward_normal, -1.0);
-	}
-	else
-	{
-		rec->front_face = 1;
-		rec->normal = outward_normal;
-	}
-	return (1);
-}
-
-int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
-{
-	t_sphere *sphere;
-	t_plane *plane;
-	t_cylinder *cylinder;
-	int hit_anything;
+	t_sphere	*sphere;
+	int			hit_anything;
 
 	hit_anything = 0;
-	// Tester les sphères
 	sphere = obj->spheres;
 	while (sphere)
 	{
@@ -125,6 +25,15 @@ int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
 			hit_anything = 1;
 		sphere = sphere->next;
 	}
+	return (hit_anything);
+}
+
+static int	test_planes(t_ray ray, t_object *obj, t_hit_record *rec)
+{
+	t_plane	*plane;
+	int		hit_anything;
+
+	hit_anything = 0;
 	plane = obj->planes;
 	while (plane)
 	{
@@ -132,6 +41,15 @@ int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
 			hit_anything = 1;
 		plane = plane->next;
 	}
+	return (hit_anything);
+}
+
+static int	test_cylinders(t_ray ray, t_object *obj, t_hit_record *rec)
+{
+	t_cylinder	*cylinder;
+	int			hit_anything;
+
+	hit_anything = 0;
 	cylinder = obj->cylinders;
 	while (cylinder)
 	{
@@ -139,5 +57,19 @@ int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
 			hit_anything = 1;
 		cylinder = cylinder->next;
 	}
+	return (hit_anything);
+}
+
+int	hit_world(t_ray ray, t_object *obj, t_hit_record *rec)
+{
+	int	hit_anything;
+
+	hit_anything = 0;
+	if (test_spheres(ray, obj, rec))
+		hit_anything = 1;
+	if (test_planes(ray, obj, rec))
+		hit_anything = 1;
+	if (test_cylinders(ray, obj, rec))
+		hit_anything = 1;
 	return (hit_anything);
 }

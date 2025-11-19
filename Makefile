@@ -9,10 +9,14 @@ SRCS = mandatory/srcs/parsing/parsing_master.c \
        mandatory/srcs/graphics/ray.c \
        mandatory/srcs/graphics/color.c \
        mandatory/srcs/graphics/hit.c \
+       mandatory/srcs/graphics/hit_sphere.c \
+       mandatory/srcs/graphics/hit_plane.c \
+       mandatory/srcs/graphics/hit_cylinder.c \
        mandatory/srcs/graphics/light.c \
        mandatory/srcs/graphics/objects/sphere.c \
        mandatory/srcs/graphics/objects/planes.c \
        mandatory/srcs/graphics/objects/cylinder.c \
+       mandatory/srcs/graphics/objects/cylinder2.c \
        mandatory/srcs/utils/free.c \
        mandatory/srcs/utils/error.c \
        mandatory/srcs/utils/utils.c \
@@ -30,38 +34,59 @@ LDFLAGS = -lm -lX11 -lXext
 LIBFT = libft/libft.a
 MLX = minilibx-linux/libmlx.a
 
+# Couleurs
+GREEN = \033[0;32m
+BLUE = \033[0;34m
+CYAN = \033[0;36m
+RESET = \033[0m
+BOLD = \033[1m
+
+.SILENT:
+
 all: $(LIBFT) $(MLX) $(NAME)
+	echo "\n$(BOLD)$(GREEN)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)"
+	echo "$(BOLD)$(GREEN)  ✓ miniRT ready! 🚀$(RESET)"
+	echo "$(BOLD)$(GREEN)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)\n"
 
 $(LIBFT):
-	make -C libft
+	echo "$(BLUE)⚙  Building libft...$(RESET)"
+	make -C libft --no-print-directory
+	echo "$(GREEN)✓  libft ready$(RESET)"
 
 $(MLX):
-	make -C minilibx-linux
+	echo "$(BLUE)⚙  Building minilibx...$(RESET)"
+	make -C minilibx-linux --no-print-directory
+	echo "$(GREEN)✓  minilibx ready$(RESET)"
 
 $(NAME): $(OBJS)
+	echo "\n$(CYAN)🔗 Linking miniRT...$(RESET)"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(LDFLAGS) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-start : 
-	@wget https://cdn.intra.42.fr/document/document/40722/minilibx-linux.tgz 
-	@tar -xvf minilibx-linux.tgz && rm -rf minilibx-linux.tgz 
-	@cd minilibx-linux && make
-	@cd libft && make
+start:
+	wget https://cdn.intra.42.fr/document/document/40722/minilibx-linux.tgz
+	tar -xvf minilibx-linux.tgz && rm -rf minilibx-linux.tgz
+	cd minilibx-linux && make
+	cd libft && make
 
 clean:
+	echo "$(CYAN)🧹 Cleaning object files...$(RESET)"
 	rm -f $(OBJS)
-	make -C libft clean
+	make -C libft clean --no-print-directory
+	echo "$(GREEN)✓  Clean done$(RESET)"
 
 fclean: clean
+	echo "$(CYAN)🗑  Removing binaries...$(RESET)"
 	rm -f $(NAME)
-	make -C libft fclean
+	make -C libft fclean --no-print-directory
+	echo "$(GREEN)✓  Full clean done$(RESET)"
 
-superclean: fclean 
-	@cd libft && make fclean 
-	@rm -rf minilibx-linux
+superclean: fclean
+	cd libft && make fclean --no-print-directory
+	rm -rf minilibx-linux
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean superclean re start

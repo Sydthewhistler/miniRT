@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:56:02 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/18 10:56:05 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/19 15:29:10 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int ft_lentab(char **tab)
 {
-	int len = 0;
+	int	len;
 
+	len = 0;
 	while (tab[len])
 		len++;
 	return (len);

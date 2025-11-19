@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:11:13 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/18 11:50:30 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/19 16:05:53 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,13 @@ int						intersect_sphere(t_ray ray, t_sphere *sphere,
 int						intersect_plane(t_ray ray, t_plane *plane, double *t);
 int						intersect_cylinder_body(t_ray ray, t_cylinder *cyl,
 							double *t);
+int						intersect_cylinder_cap(t_ray ray, t_cylinder *cyl,
+							double *t, int is_top);
+int						hit_plane(t_ray ray, t_plane *plane, t_hit_record *rec);
+int						hit_sphere(t_ray ray, t_sphere *sphere,
+							t_hit_record *rec);
+int						hit_cylinder(t_ray ray, t_cylinder *cylinder,
+							t_hit_record *rec);
 int						hit_world(t_ray ray, t_object *obj, t_hit_record *rec);
 
 // colors
