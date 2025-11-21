@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static bool	is_charset(char c, char *charset)
+static bool	is_charset(char c, const char *charset)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ static bool	is_charset(char c, char *charset)
 	return (false);
 }
 
-static size_t	count_words(char const *s, char *charset)
+static size_t	count_words(char const *s, const char *charset)
 {
 	size_t	words;
 	size_t	i;
@@ -49,7 +49,7 @@ static size_t	count_words(char const *s, char *charset)
 	return (words);
 }
 
-static void	fill_tab(char *new, char const *s, char *charset)
+static void	fill_tab(char *new, char const *s, const char *charset)
 {
 	size_t	i;
 
@@ -62,7 +62,7 @@ static void	fill_tab(char *new, char const *s, char *charset)
 	new[i] = '\0';
 }
 
-static void	set_mem(char **tab, char const *s, char *charset)
+static void	set_mem(char **tab, char const *s, const char *charset)
 {
 	size_t	count;
 	size_t	index;
@@ -90,7 +90,7 @@ static void	set_mem(char **tab, char const *s, char *charset)
 	tab[i] = 0;
 }
 
-char	**ft_split(char *s, char *charset)
+char	**ft_split(const char *s, const char *charset)
 {
 	size_t	words;
 	char	**tab;

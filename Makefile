@@ -4,6 +4,12 @@ SRCS = mandatory/srcs/parsing/parsing_master.c \
        mandatory/srcs/parsing/parsing_ambient.c \
        mandatory/srcs/parsing/parsing_objects.c \
        mandatory/srcs/parsing/parsing_calcul.c \
+       mandatory/srcs/parsing/verify_ambient.c \
+       mandatory/srcs/parsing/verify_camera.c \
+       mandatory/srcs/parsing/verify_light.c \
+       mandatory/srcs/parsing/verify_sphere.c \
+       mandatory/srcs/parsing/verify_plane.c \
+       mandatory/srcs/parsing/verify_cylinder.c \
        mandatory/srcs/graphics/init.c \
        mandatory/srcs/graphics/hooks.c \
        mandatory/srcs/graphics/ray.c \

@@ -60,21 +60,21 @@ void	environment_parsing(char **line, t_environment **env, t_object **obj)
 {
 	if (line[0][0] == 'A')
 	{
-		if ((*env)->ambient || ft_lentab(line) != 3)
+		if ((*env)->ambient || ft_lentab(line) != 3 || !verify_ambient((const char **)line))
 			exit_with_error("Error : Ambient lighting already defined or has invalid arguments",
 				env, obj);
 		parse_ambient(line, env);
 	}
 	else if (line[0][0] == 'C')
 	{
-		if ((*env)->camera || ft_lentab(line) != 4)
+		if ((*env)->camera || ft_lentab(line) != 4 || !verify_camera_((const char **)line))
 			exit_with_error("Error : Camera already defined or has invalid arguments",
 				env, obj);
 		parse_camera(line, env, obj);
 	}
 	else if (line[0][0] == 'L')
 	{
-		if ((*env)->light || ft_lentab(line) != 4)
+		if ((*env)->light || ft_lentab(line) != 4 || !verify_light((const char **)line))
 			exit_with_error("Error : Light already defined or has invalid arguments",
 				env, obj);
 		parse_light(line, env);
@@ -85,19 +85,19 @@ void	objects_parsing(char **line, t_environment **env, t_object **obj)
 {
 	if (!ft_strcmp(line[0], "sp"))
 	{
-		if (ft_lentab(line) != 4)
+		if (ft_lentab(line) != 4 || !verify_sphere((const char **)line))
 			exit_with_error("Error : Invalid sphere definition", env, obj);
 		parse_sphere(line, env, obj);
 	}
 	else if (!ft_strcmp(line[0], "pl"))
 	{
-		if (ft_lentab(line) != 4)
+		if (ft_lentab(line) != 4 || !verify_plane((const char **)line))
 			exit_with_error("Error : Invalid plane definition", env, obj);
 		parse_plane(line, env, obj);
 	}
 	else if (!ft_strcmp(line[0], "cy"))
 	{
-		if (ft_lentab(line) != 6)
+		if (ft_lentab(line) != 6 || !verify_cylinder((const char **)line))
 			exit_with_error("Error : Invalid cylinder definition", env, obj);
 		parse_cylinder(line, env, obj);
 	}

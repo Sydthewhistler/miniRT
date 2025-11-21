@@ -197,6 +197,17 @@ t_vec3					parse_vector(char *str, t_environment **env);
 t_vec3					parse_vector_range(char *str, double min, double max,
 							t_environment **env);
 
+bool	is_valid_number(const char *str);
+bool	is_valid_float(const char *str);
+bool	verify_rgb(char **split_rgb);
+bool	verify_coordinates(char **split_coord);
+bool	verify_ambient(const char **line);
+bool	verify_light(const char **line);
+bool	verify_camera_(const char **line);
+bool	verify_plane(const char **line);
+bool	verify_cylinder(const char **line);
+bool	verify_sphere(const char **line);
+
 // ------------------------------------------------------
 // FONCTIONS UTILITAIRES / RENDU
 // ------------------------------------------------------
