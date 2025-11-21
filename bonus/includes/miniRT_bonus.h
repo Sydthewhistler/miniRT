@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:33:08 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 16:38:24 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:22:09 by coraline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define QUALITY 20
+# define QUALITY 10
+# define SHININESS 32.0
 # define M_PI 3.14159265358979323846
 
 // ------------------------------------------------------
@@ -198,6 +199,17 @@ t_vec3					parse_vector(char *str, t_environment **env);
 t_vec3					parse_vector_range(char *str, double min, double max,
 							t_environment **env);
 
+bool					is_valid_number(const char *str);
+bool					is_valid_float(const char *str);
+bool					verify_rgb(char **split_rgb);
+bool					verify_coordinates(char **split_coord);
+bool					verify_ambient(const char **line);
+bool					verify_light(const char **line);
+bool					verify_camera_(const char **line);
+bool					verify_plane(const char **line);
+bool					verify_cylinder(const char **line);
+bool					verify_sphere(const char **line);
+
 // ------------------------------------------------------
 // FONCTIONS UTILITAIRES / RENDU
 // ------------------------------------------------------
@@ -210,7 +222,7 @@ void					exit_with_error(const char *message,
 							t_environment **env, t_object **obj);
 
 // ------------------------------------------------------
-// FONCTIONS AJOUTEES
+// FONCTIONS EXEC
 // ------------------------------------------------------
 
 void					init_minirt(t_environment *env, t_object *obj);

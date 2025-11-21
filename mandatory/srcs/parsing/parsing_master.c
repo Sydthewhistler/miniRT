@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_master.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:23 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 15:56:43 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:43:21 by coraline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,24 @@ void	environment_parsing(char **line, t_environment **env, t_object **obj)
 {
 	if (line[0][0] == 'A')
 	{
-		if ((*env)->ambient || ft_lentab(line) != 3 || !verify_ambient((const char **)line))
+		if ((*env)->ambient || ft_lentab(line) != 3
+			|| !verify_ambient((const char **)line))
 			exit_with_error("Error : Ambient lighting already defined or has invalid arguments",
 				env, obj);
 		parse_ambient(line, env);
 	}
 	else if (line[0][0] == 'C')
 	{
-		if ((*env)->camera || ft_lentab(line) != 4 || !verify_camera_((const char **)line))
+		if ((*env)->camera || ft_lentab(line) != 4
+			|| !verify_camera_((const char **)line))
 			exit_with_error("Error : Camera already defined or has invalid arguments",
 				env, obj);
 		parse_camera(line, env, obj);
 	}
 	else if (line[0][0] == 'L')
 	{
-		if ((*env)->light || ft_lentab(line) != 4 || !verify_light((const char **)line))
+		if ((*env)->light || ft_lentab(line) != 4
+			|| !verify_light((const char **)line))
 			exit_with_error("Error : Light already defined or has invalid arguments",
 				env, obj);
 		parse_light(line, env);

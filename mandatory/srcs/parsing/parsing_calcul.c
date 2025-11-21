@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_calcul.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:03 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/18 11:07:57 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:11:17 by coraline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_color	parse_color(char *str, t_environment **env)
 	b = atoi(components[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
-		exit_with_error("Error4\n", env, NULL); // free correctement a faire
+		exit_with_error("Error4\n", env, NULL);
 	}
 	color.r = r;
 	color.g = g;

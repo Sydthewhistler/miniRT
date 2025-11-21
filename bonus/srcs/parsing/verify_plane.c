@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 
 static bool	verify_normal(char **split_normal)
 {

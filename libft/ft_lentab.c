@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lentab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:56:02 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 15:29:10 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:37:30 by coraline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_lentab(char **tab)
+int	ft_lentab(char **tab)
 {
 	int	len;
 

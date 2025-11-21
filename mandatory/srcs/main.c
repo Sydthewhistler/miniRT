@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:53:40 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/18 11:02:15 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:41:58 by coraline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,8 @@ int	main(int argc, char **argv)
 		printf("Usage: %s <scene_file.rt>\n", argv[0]);
 		return (1);
 	}
-	// ÉTAPE 1 : Initialiser les structures
 	init_structs(&env, &obj);
-	// ÉTAPE 2 : Parser le fichier .rt (CODE PARSING - votre coéquipier)
 	parsing_master(argv[1], &env, &obj);
-	// ÉTAPE 3 : Lancer le rendu graphique (VOTRE CODE)
 	init_minirt(env, obj);
-	// La libération mémoire est gérée dans close_window() (hooks.c)
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:11:12 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 16:01:13 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:43:11 by coraline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,12 @@ void	setup_camera(t_minirt *rt, t_camera_basis *cam)
 	double	fov_rad;
 
 	cam->forward = vec_normalize(rt->env->camera->orientation);
-	// Choisir un "up" selon la direction de la caméra
 	if (fabs(cam->forward.y) > 0.999)
 		world_up = (t_vec3){0.0, 0.0, 1.0};
 	else
 		world_up = (t_vec3){0.0, 1.0, 0.0};
 	cam->right = vec_normalize(vec_cross(world_up, cam->forward));
 	cam->up = vec_cross(cam->forward, cam->right);
-	// Calcul du viewport
 	aspect_ratio = (double)WIDTH / (double)HEIGHT;
 	fov_rad = rt->env->camera->fov * M_PI / 180.0;
 	cam->viewport_height = 2.0 * tan(fov_rad / 2.0);
@@ -60,7 +58,6 @@ t_ray	generate_ray(t_minirt *rt, t_camera_basis *cam, int x, int y)
 	t_vec3	direction;
 	double	offset[2];
 
-	// Utiliser rt->sample_index (à ajouter dans t_minirt)
 	offset[0] = random_double(x, y, rt->sample_index * 2) - 0.5;
 	offset[1] = random_double(x, y, rt->sample_index * 2 + 1) - 0.5;
 	u = (((double)x + 0.5 + offset[0]) / (double)WIDTH - 0.5);

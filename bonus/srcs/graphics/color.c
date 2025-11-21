@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:10:09 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 16:39:20 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:14:43 by coraline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,31 @@ t_vec3	color_to_vec3(int r, int g, int b)
 	return (new);
 }
 
+t_vec3	apply_checkerboard(t_vec3 point, t_vec3 base_color, double scale)
+{
+	int		pattern;
+	int		check_x;
+	int		check_y;
+	int		check_z;
+	t_vec3	inverted_color;
+
+	check_x = (int)floor(point.x / scale);
+	check_y = (int)floor(point.y / scale);
+	check_z = (int)floor(point.z / scale);
+	pattern = (check_x + check_y + check_z) % 2;
+	if (pattern == 0)
+		return (base_color);
+	inverted_color.x = 1.0 - base_color.x;
+	inverted_color.y = 1.0 - base_color.y;
+	inverted_color.z = 1.0 - base_color.z;
+	return (inverted_color);
+}
+
 t_vec3	get_object_color(t_hit_record *rec)
 {
 	t_color	color;
+	t_vec3	base_color;
+	t_plane	*plane;
 
 	if (rec->type == OBJ_SPHERE)
 		color = ((t_sphere *)rec->object)->color;
@@ -58,7 +80,14 @@ t_vec3	get_object_color(t_hit_record *rec)
 		color = ((t_cylinder *)rec->object)->color;
 	else
 		return ((t_vec3){0, 0, 0});
-	return (color_to_vec3(color.r, color.g, color.b));
+	base_color = color_to_vec3(color.r, color.g, color.b);
+	if (rec->type == OBJ_PLANE)
+	{
+		plane = (t_plane *)rec->object;
+		if (fabs(plane->normal.y) > 0.9)
+			return (apply_checkerboard(rec->point, base_color, 2.0));
+	}
+	return (base_color);
 }
 
 t_vec3	ray_color(t_ray ray, t_object *obj, t_environment *env)

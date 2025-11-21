@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_ambient.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 10:53:52 by scavalli          #+#    #+#             */
-/*   Updated: 2025/11/19 16:46:14 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/21 18:41:22 by coraline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void	parse_camera(char **line, t_environment **env, t_object **obj)
 		exit_with_error("Error: FOV out of range\n", env, obj);
 }
 
-void parse_light(char **line, t_environment **env)
+void	parse_light(char **line, t_environment **env)
 {
 	t_light	*new_light;
+	t_light	*temp;
 
 	new_light = malloc(sizeof(t_light));
 	new_light->position = parse_vector(line[1], env);
@@ -42,7 +43,7 @@ void parse_light(char **line, t_environment **env)
 		(*env)->light = new_light;
 	else
 	{
-		t_light *temp = (*env)->light;
+		temp = (*env)->light;
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new_light;

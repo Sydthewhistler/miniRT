@@ -4,12 +4,12 @@ SRCS = mandatory/srcs/parsing/parsing_master.c \
        mandatory/srcs/parsing/parsing_ambient.c \
        mandatory/srcs/parsing/parsing_objects.c \
        mandatory/srcs/parsing/parsing_calcul.c \
-       mandatory/srcs/parsing/verify_ambient.c \
-       mandatory/srcs/parsing/verify_camera.c \
-       mandatory/srcs/parsing/verify_light.c \
-       mandatory/srcs/parsing/verify_sphere.c \
-       mandatory/srcs/parsing/verify_plane.c \
-       mandatory/srcs/parsing/verify_cylinder.c \
+	   mandatory/srcs/parsing/verify_ambient.c \
+	   mandatory/srcs/parsing/verify_camera.c \
+	   mandatory/srcs/parsing/verify_cylinder.c \
+	   mandatory/srcs/parsing/verify_light.c \
+	   mandatory/srcs/parsing/verify_plane.c \
+	   mandatory/srcs/parsing/verify_sphere.c \
        mandatory/srcs/graphics/init.c \
        mandatory/srcs/graphics/hooks.c \
        mandatory/srcs/graphics/ray.c \
@@ -34,6 +34,12 @@ SRCS_BONUS = bonus/srcs/parsing/parsing_master.c \
        bonus/srcs/parsing/parsing_ambient.c \
        bonus/srcs/parsing/parsing_objects.c \
        bonus/srcs/parsing/parsing_calcul.c \
+	   bonus/srcs/parsing/verify_ambient.c \
+	   bonus/srcs/parsing/verify_camera.c \
+	   bonus/srcs/parsing/verify_cylinder.c \
+	   bonus/srcs/parsing/verify_light.c \
+	   bonus/srcs/parsing/verify_plane.c \
+	   bonus/srcs/parsing/verify_sphere.c \
        bonus/srcs/graphics/init.c \
        bonus/srcs/graphics/hooks.c \
        bonus/srcs/graphics/ray.c \
@@ -57,7 +63,7 @@ SRCS_BONUS = bonus/srcs/parsing/parsing_master.c \
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-CC = cc
+CC = gcc-11
 CFLAGS = -Wall -Wextra -Werror
 
 INCLUDES = -Imandatory/includes -I./libft -I./minilibx-linux
