@@ -63,7 +63,7 @@ SRCS_BONUS = bonus/srcs/parsing/parsing_master.c \
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-CC = gcc-11
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 INCLUDES = -Imandatory/includes -I./libft -I./minilibx-linux
@@ -100,8 +100,8 @@ $(NAME): $(OBJS)
 start:
 	wget https://cdn.intra.42.fr/document/document/40722/minilibx-linux.tgz
 	tar -xvf minilibx-linux.tgz && rm -rf minilibx-linux.tgz
-	cd minilibx-linux && make
-	cd libft && make
+	@cd minilibx-linux && make
+	@cd libft && make && make clean
 
 bonus: INCLUDES=$(INCLUDES_BONUS)
 bonus: $(LIBFT) $(MLX) $(OBJS_BONUS)
@@ -110,12 +110,16 @@ bonus: $(LIBFT) $(MLX) $(OBJS_BONUS)
 	echo "$(GREEN)✓ miniRT bonus ready! ✨$(RESET)"
 
 clean:
-	rm -f $(OBJS) $(OBJS_BONUS)
+	@rm -f $(OBJS) $(OBJS_BONUS)
 	make -C libft clean --no-print-directory
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 	make -C libft fclean --no-print-directory
+
+superclean: fclean
+		make -C libft fclean --no-print-directory
+		@rm -rf minilibx-linux
 
 re: fclean all
 
