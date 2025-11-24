@@ -1,0 +1,2 @@
+pb affichage erreur "Camera already defined or 				has invalid arguments"
+leak --> still rechable ? (regarder avec les tests)

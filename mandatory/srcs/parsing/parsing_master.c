@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_master.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:23 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/21 18:43:21 by coraline         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:52:16 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	environment_parsing2(char **line, t_environment **env, t_object **obj)
 		if ((*env)->light || ft_lentab(line) != 4
 			|| !verify_light((const char **)line))
 			exit_with_error("Error : Light already defined or \
-				has invalid arguments",
-				env, obj);
+				has invalid arguments", env, obj);
 		parse_light(line, env);
 	}
 }

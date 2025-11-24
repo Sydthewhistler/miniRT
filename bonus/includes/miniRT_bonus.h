@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:33:08 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/21 18:22:09 by coraline         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:49:12 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,8 +192,6 @@ void					parse_cylinder(char **line, t_environment **env,
 
 double					parse_double(char *str, double min, double max,
 							t_environment **env);
-int						parse_int(char *str, int min, int max,
-							t_environment **env);
 t_color					parse_color(char *str, t_environment **env);
 t_vec3					parse_vector(char *str, t_environment **env);
 t_vec3					parse_vector_range(char *str, double min, double max,
@@ -214,7 +212,6 @@ bool					verify_sphere(const char **line);
 // FONCTIONS UTILITAIRES / RENDU
 // ------------------------------------------------------
 
-// void	process_rendering(t_environment *env, t_object *obj);
 void					free_environment(t_environment *env);
 void					free_objects(t_object *obj);
 void					free_tab(char **tab);
