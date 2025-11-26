@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:53:40 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/21 18:41:58 by coraline         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:46:24 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_structs(t_environment **env, t_object **obj)
 {
 	*env = malloc(sizeof(t_environment));
 	if (!*env)
-		exit_with_error("Memory allocation failed", NULL, NULL,NULL);
+		exit_with_error("Memory allocation failed", NULL, NULL, NULL);
 	(*env)->ambient = NULL;
 	(*env)->camera = NULL;
 	(*env)->light = NULL;
@@ -24,7 +24,7 @@ void	init_structs(t_environment **env, t_object **obj)
 	if (!*obj)
 	{
 		free(*env);
-		exit_with_error("Memory allocation failed", NULL, NULL,NULL);
+		exit_with_error("Memory allocation failed", NULL, NULL, NULL);
 	}
 	(*obj)->spheres = NULL;
 	(*obj)->planes = NULL;

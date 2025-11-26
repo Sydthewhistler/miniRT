@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:11:13 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/24 17:49:20 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/26 13:46:01 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,8 @@ bool					verify_sphere(const char **line);
 void					free_environment(t_environment *env);
 void					free_objects(t_object *obj);
 void					free_tab(char **tab);
-void	exit_with_error(const char *message, t_environment **env,
-		t_object **obj, char **line);
+void					exit_with_error(const char *message,
+							t_environment **env, t_object **obj, char **line);
 
 // ------------------------------------------------------
 // FONCTIONS EXEC

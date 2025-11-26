@@ -5,31 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/19 15:30:08 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/19 16:38:53 by cprot            ###   ########.fr       */
+/*   Created: 2025/03/12 17:42:49 by coraline          #+#    #+#             */
+/*   Updated: 2025/11/26 13:24:27 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <fcntl.h>
-# include <stdbool.h>
-# include <stdint.h>
-# include <stdio.h>
-# include <stdlib.h>
 # include <unistd.h>
+# include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
+#  define BUFFER_SIZE 42
 # endif
 
-# define MAX_FD 1000
-
-char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *str);
-void	*ft_calloc(size_t count, size_t size);
-bool	ft_strchr2(const char *s, int c);
+char			*get_next_line(int fd);
+unsigned int	ft_len_line(const char *str, char c);
+char			*ft_gnl_strjoin(char *s1, char *s2);
+char			*ft_gnl_strchr(const char *s, int c);
+char			*extract_line(char *buffer, char c);
+unsigned int	ft_gnl_strlen(const char *str);
 
 #endif

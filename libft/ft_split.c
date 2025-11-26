@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:22:29 by scavalli          #+#    #+#             */
-/*   Updated: 2025/11/19 15:29:18 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/26 13:43:36 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,13 @@ static void	fill_tab(char *new, char const *s, const char *charset)
 	new[i] = '\0';
 }
 
+static void	free_split(char **tab, size_t i)
+{
+	while (i > 0)
+		free(tab[--i]);
+	free(tab);
+}
+
 static void	set_mem(char **tab, char const *s, const char *charset)
 {
 	size_t	count;
@@ -79,20 +86,14 @@ static void	set_mem(char **tab, char const *s, const char *charset)
 		{
 			tab[i] = malloc(sizeof(char) * (count + 1));
 			if (!tab[i])
-			{
-				while (i > 0)
-					free(tab[--i]);
-				free(tab);
-				return ;
-			}
-			fill_tab(tab[i], (s + index), charset);
-			i++;
-			index = index + count;
+				return (free_split(tab, i));
+			fill_tab(tab[i++], (s + index), charset);
+			index += count;
 		}
 		else
 			index++;
 	}
-	tab[i] = 0;
+	tab[i] = NULL;
 }
 
 char	**ft_split(const char *s, const char *charset)
