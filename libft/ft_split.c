@@ -62,13 +62,6 @@ static void	fill_tab(char *new, char const *s, const char *charset)
 	new[i] = '\0';
 }
 
-static void	free_split(char **tab, size_t i)
-{
-	while (i > 0)
-		free(tab[--i]);
-	free(tab);
-}
-
 static void	set_mem(char **tab, char const *s, const char *charset)
 {
 	size_t	count;

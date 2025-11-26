@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_calcul.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coraline <coraline@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:03 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/21 18:11:11 by coraline         ###   ########.fr       */
+/*   Updated: 2025/11/26 14:58:56 by scavalli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ double	parse_double(char *str, double min, double max, t_environment **env)
 	double	value;
 
 	if (!str)
-		exit_with_error("Error1\n", env, NULL);
+		exit_with_error("Error1\n", env, NULL, NULL);
 	value = ft_atof(str);
 	if (value < min || value > max)
-		exit_with_error("Error2\n", env, NULL);
+		exit_with_error("Error2\n", env, NULL, NULL);
 	return (value);
 }
 
@@ -36,7 +36,7 @@ t_color	parse_color(char *str, t_environment **env)
 	if (!components || ft_lentab(components) != 3)
 	{
 		free_tab(components);
-		exit_with_error("Error3\n", env, NULL);
+		exit_with_error("Error3\n", env, NULL, NULL);
 	}
 	r = atoi(components[0]);
 	g = atoi(components[1]);
@@ -44,7 +44,7 @@ t_color	parse_color(char *str, t_environment **env)
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_tab(components);
-		exit_with_error("Error4\n", env, NULL);
+		exit_with_error("Error4\n", env, NULL, NULL);
 	}
 	color.r = r;
 	color.g = g;
@@ -62,7 +62,7 @@ t_vec3	parse_vector(char *str, t_environment **env)
 	if (!components || ft_lentab(components) != 3)
 	{
 		free_tab(components);
-		exit_with_error("Error5\n", env, NULL);
+		exit_with_error("Error5\n", env, NULL, NULL);
 	}
 	vec.x = parse_double(components[0], -DBL_MAX, DBL_MAX, env);
 	vec.y = parse_double(components[1], -DBL_MAX, DBL_MAX, env);
@@ -80,7 +80,7 @@ t_vec3	parse_vector_range(char *str, double min, double max,
 	if (vec.x < min || vec.x > max || vec.y < min || vec.y > max || vec.z < min
 		|| vec.z > max)
 	{
-		exit_with_error("Error6\n", env, NULL);
+		exit_with_error("Error6\n", env, NULL, NULL);
 	}
 	return (vec);
 }

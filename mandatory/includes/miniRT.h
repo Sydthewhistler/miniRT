@@ -26,6 +26,10 @@
 # define HEIGHT 600
 # define QUALITY 20
 # define M_PI 3.14159265358979323846
+# define LIGHT_ERROR "Error : Light already defined or has invalid arguments"
+# define AMBIENT_ERROR "Error : Ambient lighting already defined or\
+has invalid arguments"
+# define CAMERA_ERROR "Error : Camera already defined or has invalid arguments"
 
 // ------------------------------------------------------
 // STRUCTURES PRINCIPALES

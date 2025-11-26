@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
+/*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:33:08 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/24 17:49:12 by cprot            ###   ########.fr       */
+/*   Updated: 2025/11/26 14:55:37 by scavalli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@
 # define QUALITY 10
 # define SHININESS 32.0
 # define M_PI 3.14159265358979323846
+# define LIGHT_ERROR "Error : Light has invalid arguments"
+# define AMBIENT_ERROR "Error : Ambient lighting already defined or\
+has invalid arguments"
+# define CAMERA_ERROR "Error : Camera already defined or has invalid arguments"
 
 // ------------------------------------------------------
 // STRUCTURES PRINCIPALES
@@ -180,8 +184,7 @@ void					objects_parsing(char **line, t_environment **env,
 							t_object **obj);
 
 void					parse_ambient(char **line, t_environment **env);
-void					parse_camera(char **line, t_environment **env,
-							t_object **obj);
+void					parse_camera(char **line, t_environment **env);
 void					parse_light(char **line, t_environment **env);
 void					parse_sphere(char **line, t_environment **env,
 							t_object **obj);
@@ -216,7 +219,7 @@ void					free_environment(t_environment *env);
 void					free_objects(t_object *obj);
 void					free_tab(char **tab);
 void					exit_with_error(const char *message,
-							t_environment **env, t_object **obj);
+							t_environment **env, t_object **obj, char **line);
 
 // ------------------------------------------------------
 // FONCTIONS EXEC
