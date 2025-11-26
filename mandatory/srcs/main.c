@@ -16,7 +16,7 @@ void	init_structs(t_environment **env, t_object **obj)
 {
 	*env = malloc(sizeof(t_environment));
 	if (!*env)
-		exit_with_error("Memory allocation failed", NULL, NULL);
+		exit_with_error("Memory allocation failed", NULL, NULL,NULL);
 	(*env)->ambient = NULL;
 	(*env)->camera = NULL;
 	(*env)->light = NULL;
@@ -24,7 +24,7 @@ void	init_structs(t_environment **env, t_object **obj)
 	if (!*obj)
 	{
 		free(*env);
-		exit_with_error("Memory allocation failed", NULL, NULL);
+		exit_with_error("Memory allocation failed", NULL, NULL,NULL);
 	}
 	(*obj)->spheres = NULL;
 	(*obj)->planes = NULL;
@@ -44,5 +44,7 @@ int	main(int argc, char **argv)
 	init_structs(&env, &obj);
 	parsing_master(argv[1], &env, &obj);
 	init_minirt(env, obj);
+	free_environment(env);
+	free_objects(obj);
 	return (0);
 }

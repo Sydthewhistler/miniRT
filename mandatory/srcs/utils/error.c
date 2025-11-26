@@ -13,7 +13,7 @@
 #include "miniRT.h"
 
 void	exit_with_error(const char *message, t_environment **env,
-		t_object **obj)
+		t_object **obj, char **line)
 {
 	if (message)
 		printf("%s\n", message);
@@ -21,5 +21,6 @@ void	exit_with_error(const char *message, t_environment **env,
 		printf("Error\n");
 	free_environment(*env);
 	free_objects(*obj);
+	free_tab(line);
 	exit(EXIT_FAILURE);
 }

@@ -44,5 +44,7 @@ int	main(int argc, char **argv)
 	init_structs(&env, &obj);
 	parsing_master(argv[1], &env, &obj);
 	init_minirt(env, obj);
+	free_environment(&env);
+	free_objects(&obj);
 	return (0);
 }

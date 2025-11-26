@@ -21,10 +21,7 @@ void	find_type(char **line, t_environment **env, t_object **obj)
 		|| !ft_strcmp(line[0], "cy"))
 		objects_parsing(line, env, obj);
 	else
-	{
-		free_tab(line);
-		exit_with_error("Error : Invalid identifier", env, obj);
-	}
+		exit_with_error("Error : Invalid identifier", env, obj,line);
 	free_tab(line);
 }
 
@@ -36,7 +33,7 @@ void	parsing_master(char *filename, t_environment **env, t_object **obj)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		exit_with_error("Error opening file", env, obj);
+		exit_with_error("Error opening file", env, obj,NULL);
 	while (1)
 	{
 		gnl_line = get_next_line(fd);
@@ -52,9 +49,9 @@ void	parsing_master(char *filename, t_environment **env, t_object **obj)
 		find_type(line, env, obj);
 	}
 	if (close(fd) < 0)
-		exit_with_error("Error closing file", env, obj);
+		exit_with_error("Error closing file", env, obj,NULL);
 	if (!(*env)->ambient || !(*env)->camera || !(*env)->light)
-		exit_with_error("Error : Missing essential elements", env, obj);
+		exit_with_error("Error : Missing essential elements", env, obj,NULL);
 }
 
 void	environment_parsing2(char **line, t_environment **env, t_object **obj)
@@ -64,7 +61,7 @@ void	environment_parsing2(char **line, t_environment **env, t_object **obj)
 		if ((*env)->light || ft_lentab(line) != 4
 			|| !verify_light((const char **)line))
 			exit_with_error("Error : Light already defined or \
-				has invalid arguments", env, obj);
+				has invalid arguments", env, obj,line);
 		parse_light(line, env);
 	}
 }
@@ -76,8 +73,8 @@ void	environment_parsing(char **line, t_environment **env, t_object **obj)
 		if ((*env)->ambient || ft_lentab(line) != 3
 			|| !verify_ambient((const char **)line))
 			exit_with_error("Error : Ambient lighting already defined or \
-				has invalid arguments",
-				env, obj);
+has invalid arguments",
+				env, obj,line);
 		parse_ambient(line, env);
 	}
 	else if (line[0][0] == 'C')
@@ -85,8 +82,8 @@ void	environment_parsing(char **line, t_environment **env, t_object **obj)
 		if ((*env)->camera || ft_lentab(line) != 4
 			|| !verify_camera_((const char **)line))
 			exit_with_error("Error : Camera already defined or \
-				has invalid arguments",
-				env, obj);
+has invalid arguments",
+				env, obj,line);
 		parse_camera(line, env, obj);
 	}
 	else
@@ -98,19 +95,19 @@ void	objects_parsing(char **line, t_environment **env, t_object **obj)
 	if (!ft_strcmp(line[0], "sp"))
 	{
 		if (ft_lentab(line) != 4 || !verify_sphere((const char **)line))
-			exit_with_error("Error : Invalid sphere definition", env, obj);
+			exit_with_error("Error : Invalid sphere definition", env, obj,line);
 		parse_sphere(line, env, obj);
 	}
 	else if (!ft_strcmp(line[0], "pl"))
 	{
 		if (ft_lentab(line) != 4 || !verify_plane((const char **)line))
-			exit_with_error("Error : Invalid plane definition", env, obj);
+			exit_with_error("Error : Invalid plane definition", env, obj,line);
 		parse_plane(line, env, obj);
 	}
 	else if (!ft_strcmp(line[0], "cy"))
 	{
 		if (ft_lentab(line) != 6 || !verify_cylinder((const char **)line))
-			exit_with_error("Error : Invalid cylinder definition", env, obj);
+			exit_with_error("Error : Invalid cylinder definition", env, obj,line);
 		parse_cylinder(line, env, obj);
 	}
 }

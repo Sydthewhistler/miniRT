@@ -213,8 +213,8 @@ bool					verify_sphere(const char **line);
 void					free_environment(t_environment *env);
 void					free_objects(t_object *obj);
 void					free_tab(char **tab);
-void					exit_with_error(const char *message,
-							t_environment **env, t_object **obj);
+void	exit_with_error(const char *message, t_environment **env,
+		t_object **obj, char **line);
 
 // ------------------------------------------------------
 // FONCTIONS EXEC

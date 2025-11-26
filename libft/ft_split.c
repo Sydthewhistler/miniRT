@@ -79,7 +79,12 @@ static void	set_mem(char **tab, char const *s, const char *charset)
 		{
 			tab[i] = malloc(sizeof(char) * (count + 1));
 			if (!tab[i])
+			{
+				while (i > 0)
+					free(tab[--i]);
+				free(tab);
 				return ;
+			}
 			fill_tab(tab[i], (s + index), charset);
 			i++;
 			index = index + count;

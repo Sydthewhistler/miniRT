@@ -35,6 +35,7 @@ t_color	parse_color(char *str, t_environment **env)
 	components = ft_split(str, ",");
 	if (!components || ft_lentab(components) != 3)
 	{
+		free_tab(components);
 		exit_with_error("Error3\n", env, NULL);
 	}
 	r = atoi(components[0]);
@@ -42,6 +43,7 @@ t_color	parse_color(char *str, t_environment **env)
 	b = atoi(components[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
+		free_tab(components);
 		exit_with_error("Error4\n", env, NULL);
 	}
 	color.r = r;
@@ -59,6 +61,7 @@ t_vec3	parse_vector(char *str, t_environment **env)
 	components = ft_split(str, ",");
 	if (!components || ft_lentab(components) != 3)
 	{
+		free_tab(components);
 		exit_with_error("Error5\n", env, NULL);
 	}
 	vec.x = parse_double(components[0], -DBL_MAX, DBL_MAX, env);

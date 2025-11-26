@@ -69,7 +69,7 @@ CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -Imandatory/includes -I./libft -I./minilibx-linux
 INCLUDES_BONUS = -Ibonus/includes -I./libft -I./minilibx-linux
 
-LDFLAGS = -lm -lX11 -lXext
+LDFLAGS = -lm -lX11 -lXext -g3
 
 LIBFT = libft/libft.a
 MLX = minilibx-linux/libmlx.a
