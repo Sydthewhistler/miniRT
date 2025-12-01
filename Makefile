@@ -100,6 +100,12 @@ $(MLX):
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+start:
+	wget https://cdn.intra.42.fr/document/document/40722/minilibx-linux.tgz
+	tar -xvf minilibx-linux.tgz && rm -rf minilibx-linux.tgz 
+	@cd minilibx-linux && make 
+	@cd libft && make && make clean
+
 clean:
 	$(RM) $(OBJS) $(OBJS_BONUS)
 	$(MAKE) -C $(LIBFT_DIR) clean
