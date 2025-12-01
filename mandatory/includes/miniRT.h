@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:11:13 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/26 13:46:01 by cprot            ###   ########.fr       */
+/*   Updated: 2025/12/01 12:29:54 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # define HEIGHT 600
 # define QUALITY 20
 # define M_PI 3.14159265358979323846
-# define LIGHT_ERROR "Error : Light already defined or has invalid arguments"
-# define AMBIENT_ERROR "Error : Ambient lighting already defined or\
+# define LIGHT_ERROR "Light already defined or has invalid arguments"
+# define AMBIENT_ERROR "Ambient lighting already defined or\
 has invalid arguments"
-# define CAMERA_ERROR "Error : Camera already defined or has invalid arguments"
+# define CAMERA_ERROR "Camera already defined or has invalid arguments"
 
 // ------------------------------------------------------
 // STRUCTURES PRINCIPALES

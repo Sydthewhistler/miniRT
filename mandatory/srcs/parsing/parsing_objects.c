@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_objects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 10:54:27 by scavalli          #+#    #+#             */
-/*   Updated: 2025/11/19 10:55:06 by scavalli         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:26:42 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	parse_sphere(char **line, t_environment **env, t_object **obj)
 
 	new_sphere = malloc(sizeof(t_sphere));
 	if (!new_sphere)
-		exit_with_error("Error: Memory allocation failed\n", env, NULL, NULL);
+		exit_with_error("Memory allocation failed\n", env, NULL, NULL);
 	new_sphere->center = parse_vector(line[1], env);
 	new_sphere->diameter = parse_double(line[2], 0.0, DBL_MAX, env);
 	new_sphere->color = parse_color(line[3], env);
@@ -42,7 +42,7 @@ void	parse_plane(char **line, t_environment **env, t_object **obj)
 
 	new_plane = malloc(sizeof(t_plane));
 	if (!new_plane)
-		exit_with_error("Error: Memory allocation failed\n", env, NULL, NULL);
+		exit_with_error("Memory allocation failed\n", env, NULL, NULL);
 	new_plane->point = parse_vector(line[1], env);
 	new_plane->normal = parse_vector_range(line[2], -1.0, 1.0, env);
 	new_plane->color = parse_color(line[3], env);
@@ -65,7 +65,7 @@ void	parse_cylinder(char **line, t_environment **env, t_object **obj)
 
 	new_cylinder = malloc(sizeof(t_cylinder));
 	if (!new_cylinder)
-		exit_with_error("Error: Memory allocation failed\n", env, NULL, NULL);
+		exit_with_error("Memory allocation failed\n", env, NULL, NULL);
 	new_cylinder->center = parse_vector(line[1], env);
 	new_cylinder->axis = parse_vector_range(line[2], -1.0, 1.0, env);
 	new_cylinder->diameter = parse_double(line[3], 0.0, DBL_MAX, env);

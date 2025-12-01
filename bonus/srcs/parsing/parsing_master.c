@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_master.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:23 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/26 15:10:10 by scavalli         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:29:14 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	find_type(char **line, t_environment **env, t_object **obj)
 	else
 	{
 		free_tab(line);
-		exit_with_error("Error : Invalid identifier", env, obj, line);
+		exit_with_error("Invalid identifier", env, obj, line);
 	}
 	free_tab(line);
 }
@@ -54,7 +54,7 @@ void	parsing_master(char *filename, t_environment **env, t_object **obj)
 	if (close(fd) < 0)
 		exit_with_error("Error closing file", env, obj, NULL);
 	if (!(*env)->ambient || !(*env)->camera || !(*env)->light)
-		exit_with_error("Error : Missing essential elements", env, obj, NULL);
+		exit_with_error("Missing essential elements", env, obj, NULL);
 }
 
 void	environment_parsing2(char **line, t_environment **env, t_object **obj)
@@ -92,20 +92,20 @@ void	objects_parsing(char **line, t_environment **env, t_object **obj)
 	if (!ft_strcmp(line[0], "sp"))
 	{
 		if (ft_lentab(line) != 4 || !verify_sphere((const char **)line))
-			exit_with_error("Error : Invalid sphere definition", env, obj,
+			exit_with_error("Invalid sphere definition", env, obj,
 				line);
 		parse_sphere(line, env, obj);
 	}
 	else if (!ft_strcmp(line[0], "pl"))
 	{
 		if (ft_lentab(line) != 4 || !verify_plane((const char **)line))
-			exit_with_error("Error : Invalid plane definition", env, obj, line);
+			exit_with_error("Invalid plane definition", env, obj, line);
 		parse_plane(line, env, obj);
 	}
 	else if (!ft_strcmp(line[0], "cy"))
 	{
 		if (ft_lentab(line) != 6 || !verify_cylinder((const char **)line))
-			exit_with_error("Error : Invalid cylinder definition", env, obj,
+			exit_with_error("Invalid cylinder definition", env, obj,
 				line);
 		parse_cylinder(line, env, obj);
 	}

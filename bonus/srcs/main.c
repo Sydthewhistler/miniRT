@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:53:40 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/26 14:57:18 by scavalli         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:30:26 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ void	init_structs(t_environment **env, t_object **obj)
 	(*obj)->cylinders = NULL;
 }
 
+static void	check_rt_extension(const char *filename)
+{
+	size_t	len;
+
+	len = ft_strlen(filename);
+	if (len < 3 || ft_strcmp(filename + len - 3, ".rt") != 0)
+	{
+		printf("Error\n File must have a .rt extension\n");
+		exit(1);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_environment	*env;
@@ -38,9 +50,10 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		printf("Usage: %s <scene_file.rt>\n", argv[0]);
+		printf("Error\nUsage: %s <scene_file.rt>\n", argv[0]);
 		return (1);
 	}
+	check_rt_extension(argv[1]);
 	init_structs(&env, &obj);
 	parsing_master(argv[1], &env, &obj);
 	init_minirt(env, obj);

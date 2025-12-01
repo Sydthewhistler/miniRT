@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:33:08 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/26 14:55:37 by scavalli         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:29:40 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # define QUALITY 10
 # define SHININESS 32.0
 # define M_PI 3.14159265358979323846
-# define LIGHT_ERROR "Error : Light has invalid arguments"
-# define AMBIENT_ERROR "Error : Ambient lighting already defined or\
+# define LIGHT_ERROR "Light has invalid arguments"
+# define AMBIENT_ERROR "Ambient lighting already defined or\
 has invalid arguments"
-# define CAMERA_ERROR "Error : Camera already defined or has invalid arguments"
+# define CAMERA_ERROR "Camera already defined or has invalid arguments"
 
 // ------------------------------------------------------
 // STRUCTURES PRINCIPALES
