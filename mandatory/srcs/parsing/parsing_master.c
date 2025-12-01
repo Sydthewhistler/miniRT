@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-void	find_type(char **line, t_environment **env, t_object **obj)
+static void	find_type(char **line, t_environment **env, t_object **obj)
 {
 	if (ft_strcmp(line[0], "A") == 0 || ft_strcmp(line[0], "C") == 0
 		|| ft_strcmp(line[0], "L") == 0)
@@ -54,7 +54,7 @@ void	parsing_master(char *filename, t_environment **env, t_object **obj)
 		exit_with_error("Missing essential elements", env, obj, NULL);
 }
 
-void	environment_parsing2(char **line, t_environment **env, t_object **obj)
+static void	environment_parsing2(char **line, t_environment **env, t_object **obj)
 {
 	if (line[0][0] == 'L')
 	{

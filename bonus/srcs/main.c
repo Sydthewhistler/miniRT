@@ -12,7 +12,7 @@
 
 #include "miniRT_bonus.h"
 
-void	init_structs(t_environment **env, t_object **obj)
+static void	init_structs(t_environment **env, t_object **obj)
 {
 	*env = malloc(sizeof(t_environment));
 	if (!*env)

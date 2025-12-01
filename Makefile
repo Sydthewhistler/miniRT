@@ -116,6 +116,10 @@ fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(MAKE) -C $(MLX_DIR) clean
 
+superclean: fclean
+	@rm -rf minilibx-linux
+	@cd libft && make fclean
+
 re: fclean all
 
 .PHONY: all clean fclean re bonus
