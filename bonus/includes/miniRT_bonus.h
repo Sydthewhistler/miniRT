@@ -6,7 +6,7 @@
 /*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:33:08 by cprot             #+#    #+#             */
-/*   Updated: 2025/12/01 12:29:40 by cprot            ###   ########.fr       */
+/*   Updated: 2025/12/01 13:13:24 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 # define SHININESS 32.0
 # define M_PI 3.14159265358979323846
 # define LIGHT_ERROR "Light has invalid arguments"
-# define AMBIENT_ERROR "Ambient lighting already defined or\
+# define AMBIENT_ERROR \
+	"Ambient lighting already defined or\
 has invalid arguments"
 # define CAMERA_ERROR "Camera already defined or has invalid arguments"
 
@@ -184,7 +185,8 @@ void					objects_parsing(char **line, t_environment **env,
 							t_object **obj);
 
 void					parse_ambient(char **line, t_environment **env);
-void					parse_camera(char **line, t_environment **env);
+void					parse_camera(char **line, t_environment **env,
+							t_object **obj);
 void					parse_light(char **line, t_environment **env);
 void					parse_sphere(char **line, t_environment **env,
 							t_object **obj);

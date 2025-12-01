@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_calcul.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scavalli <scavalli@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: cprot <cprot@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 10:09:03 by cprot             #+#    #+#             */
-/*   Updated: 2025/11/26 14:58:56 by scavalli         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:56:04 by cprot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ t_color	parse_color(char *str, t_environment **env)
 		free_tab(components);
 		exit_with_error("Error3\n", env, NULL, NULL);
 	}
-	r = atoi(components[0]);
-	g = atoi(components[1]);
-	b = atoi(components[2]);
+	r = ft_atoi(components[0]);
+	g = ft_atoi(components[1]);
+	b = ft_atoi(components[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_tab(components);
