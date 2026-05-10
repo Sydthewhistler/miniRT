@@ -100,10 +100,6 @@ $(MLX):
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-start:
-	@cd minilibx-linux && make 
-	@cd libft && make && make clean
-
 clean:
 	$(RM) $(OBJS) $(OBJS_BONUS)
 	$(MAKE) -C $(LIBFT_DIR) clean
@@ -113,10 +109,6 @@ fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(MAKE) -C $(MLX_DIR) clean
-
-superclean: fclean
-	@rm -rf minilibx-linux
-	@cd libft && make fclean
 
 re: fclean all
 
