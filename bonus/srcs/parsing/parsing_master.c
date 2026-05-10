@@ -81,7 +81,7 @@ void	environment_parsing(char **line, t_environment **env, t_object **obj)
 		if ((*env)->camera || ft_lentab(line) != 4
 			|| !verify_camera_((const char **)line))
 			exit_with_error(CAMERA_ERROR, env, obj, line);
-		parse_camera(line, env);
+		parse_camera(line, env, obj);
 	}
 	else
 		environment_parsing2(line, env, obj);
