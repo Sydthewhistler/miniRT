@@ -6,9 +6,11 @@ A ray tracer written in C. miniRT renders 3D scenes described in `.rt` files usi
 
 ## Screenshots
 
-![Color sphere with ambient and point lighting](assets/color_sphere.png)
-
-![Multiple objects — sphere, plane, and cylinder](assets/multiple_objects.png)
+<p align="center">
+  <img src="assets/color_sphere.png" width="45%" alt="Color sphere with ambient and point lighting" />
+  &nbsp;&nbsp;
+  <img src="assets/multiple_objects.png" width="45%" alt="Multiple objects — sphere, plane, and cylinder" />
+</p>
 
 ---
 
